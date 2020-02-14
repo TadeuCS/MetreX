@@ -1,10 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:MetreX/src/mesa/controllers/mesa_controller.dart';
 import 'package:MetreX/src/mesa/models/item_model.dart';
-import 'package:MetreX/src/pedido/pedido_page.dart';
 import 'package:MetreX/src/shared/contents/custom_item_totalizer.dart';
 import 'package:MetreX/src/shared/contents/custom_submenu.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:get_it/get_it.dart';
 
 class NovaMesaPage extends StatefulWidget {

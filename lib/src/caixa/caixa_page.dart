@@ -8,26 +8,7 @@ class CaixaPage extends StatelessWidget {
         title: Text('Caixa'),
         centerTitle: true,
       ),
-      body: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 100,
-              child: Card(
-                child: Text('Teste Daniel'),
-              ),
-            ),
-            SizedBox(
-              height: 100,
-              child: Card(
-                child: Text('Teste Daniel'),
-              ),
-            )
-          ],
-        ),
-      ),
+      body: Container(),
     );
   }
 }
