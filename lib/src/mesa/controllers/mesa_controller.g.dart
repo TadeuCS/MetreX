@@ -25,4 +25,71 @@ mixin _$MesaController on _MesaControllerBase, Store {
       _$mesaModelAtom.reportChanged();
     }, _$mesaModelAtom, name: '${_$mesaModelAtom.name}_set');
   }
+
+  final _$mesasAtom = Atom(name: '_MesaControllerBase.mesas');
+
+  @override
+  ObservableList<MesaModel> get mesas {
+    _$mesasAtom.context.enforceReadPolicy(_$mesasAtom);
+    _$mesasAtom.reportObserved();
+    return super.mesas;
+  }
+
+  @override
+  set mesas(ObservableList<MesaModel> value) {
+    _$mesasAtom.context.conditionallyRunInAction(() {
+      super.mesas = value;
+      _$mesasAtom.reportChanged();
+    }, _$mesasAtom, name: '${_$mesasAtom.name}_set');
+  }
+
+  final _$mesasFiltradasAtom = Atom(name: '_MesaControllerBase.mesasFiltradas');
+
+  @override
+  ObservableList<MesaModel> get mesasFiltradas {
+    _$mesasFiltradasAtom.context.enforceReadPolicy(_$mesasFiltradasAtom);
+    _$mesasFiltradasAtom.reportObserved();
+    return super.mesasFiltradas;
+  }
+
+  @override
+  set mesasFiltradas(ObservableList<MesaModel> value) {
+    _$mesasFiltradasAtom.context.conditionallyRunInAction(() {
+      super.mesasFiltradas = value;
+      _$mesasFiltradasAtom.reportChanged();
+    }, _$mesasFiltradasAtom, name: '${_$mesasFiltradasAtom.name}_set');
+  }
+
+  final _$_MesaControllerBaseActionController =
+      ActionController(name: '_MesaControllerBase');
+
+  @override
+  void abrirMesa() {
+    final _$actionInfo = _$_MesaControllerBaseActionController.startAction();
+    try {
+      return super.abrirMesa();
+    } finally {
+      _$_MesaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void listarTodas() {
+    final _$actionInfo = _$_MesaControllerBaseActionController.startAction();
+    try {
+      return super.listarTodas();
+    } finally {
+      _$_MesaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void filtrar(String text) {
+    final _$actionInfo = _$_MesaControllerBaseActionController.startAction();
+    try {
+      return super.filtrar(text);
+    } finally {
+      _$_MesaControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 }

@@ -1,19 +1,24 @@
 import 'package:flutter/cupertino.dart';
 
-import 'item_model.dart';
-
 class MesaModel {
-  final int id;
-  final String numero;
-  final double total;
-  List<ItemModel> itens;
+  int idEmpresa;
+  int idMesa;
+  String numeroMesa;
+  String situacao;
+  double valorTotal;
+  int pedidoCorrente;
 
-  MesaModel({
-    this.id,
-    @required this.numero,
-    this.total = 0.0,
-    this.itens,
-  }) {
-    itens = List();
+  MesaModel(
+      {@required this.numeroMesa,
+      this.situacao = 'Aberta',
+      this.valorTotal = 0.0});
+
+  MesaModel.fromJson(Map<String, dynamic> json) {
+    this.idEmpresa = json["idEmpresa"];
+    this.idMesa = json["idMesa"];
+    this.numeroMesa = json["numeroMesa"];
+    this.situacao = json["situacao"];
+    this.valorTotal = json["valorTotal"];
+    this.pedidoCorrente = json["pedidoCorrente"];
   }
 }

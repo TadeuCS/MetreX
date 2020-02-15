@@ -2,19 +2,21 @@ import 'dart:math' as math;
 
 import 'package:MetreX/src/mesa/controllers/mesa_controller.dart';
 import 'package:MetreX/src/mesa/models/item_model.dart';
+import 'package:MetreX/src/pedido/controllers/pedido_controller.dart';
 import 'package:MetreX/src/shared/contents/custom_item_totalizer.dart';
 import 'package:MetreX/src/shared/contents/custom_submenu.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class NovaMesaPage extends StatefulWidget {
+class DetalharMesaPage extends StatefulWidget {
   @override
-  _NovaMesaPageState createState() => _NovaMesaPageState();
+  _DetalharMesaPageState createState() => _DetalharMesaPageState();
 }
 
-class _NovaMesaPageState extends State<NovaMesaPage>
+class _DetalharMesaPageState extends State<DetalharMesaPage>
     with TickerProviderStateMixin {
   MesaController mesaController = GetIt.I.get<MesaController>();
+  PedidoController pedidoController = GetIt.I.get<PedidoController>();
   AnimationController _fabAnimation;
   static const List<IconData> icons = const [
     Icons.print,
@@ -62,7 +64,11 @@ class _NovaMesaPageState extends State<NovaMesaPage>
                   child: Icon(
                     icons[index],
                   ),
-                  onPressed: () {}),
+                  onPressed: () {
+                    if(icons[index]==Icons.monetization_on){
+                      Navigator.pushNamed(context, 'recebimento');
+                    }
+                  }),
             ),
           ),
         ).toList()
@@ -126,7 +132,7 @@ class _NovaMesaPageState extends State<NovaMesaPage>
                     bottomRight: Radius.circular(30),
                     bottomLeft: Radius.circular(30))),
             child: Text(
-              '${mesaController.mesaModel.numero}',
+              '${mesaController.mesaModel.numeroMesa}',
               style: TextStyle(
                   color: Theme.of(context).indicatorColor,
                   fontSize: 25,
@@ -226,9 +232,9 @@ class _NovaMesaPageState extends State<NovaMesaPage>
         physics: ScrollPhysics(),
         separatorBuilder: (_, index) => Divider(),
         shrinkWrap: true,
-        itemCount: mesaController.mesaModel.itens.length,
+        itemCount: pedidoController.pedido.itens.length,
         itemBuilder: (_, index) {
-          ItemModel e = mesaController.mesaModel.itens[index];
+          ItemModel e = pedidoController.pedido.itens[index];
           return ListTile(
             title: Text(e.descricao),
             subtitle: Text('${e.qtde} x ${e.preco} = ${e.total}'),
@@ -265,7 +271,7 @@ class _NovaMesaPageState extends State<NovaMesaPage>
   List<TableRow> _buildTableRows() {
     List<TableRow> rows = List();
     rows.add(_buildRow(["Produto", "Qtde", "Preço", "Total"], true));
-    rows.addAll(mesaController.mesaModel.itens
+    rows.addAll(pedidoController.pedido.itens
         .map((e) => _buildRow([
               e.descricao,
               e.qtde.toStringAsFixed(3),
