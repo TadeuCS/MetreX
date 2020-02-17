@@ -51,6 +51,15 @@ class OUtil {
     return formatter.format(valor);
   }
 
+  static bool isNumeric(String str) {
+    try {
+      double.parse(str);
+      return true;
+    } on FormatException {
+      return false;      
+    }
+  }
+
   static String onlyInteger(double valor) {
     return valor.toInt().toString();
   }

@@ -1,19 +1,21 @@
-import 'package:MetreX/src/caixa/caixa_page.dart';
-import 'package:MetreX/src/configuracao/configuracao_page.dart';
-import 'package:MetreX/src/mesa/controllers/mesa_controller.dart';
-import 'package:MetreX/src/mesa/mesa_page.dart';
-import 'package:MetreX/src/pedido/controllers/pedido_controller.dart';
-import 'package:MetreX/src/pedido/pedido_page.dart';
-import 'package:MetreX/src/recebimento/recebimento_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 
-import 'home/home_page.dart';
-import 'login/blocs/usuario_bloc.dart';
-import 'login/login_page.dart';
-import 'mesa/widgets/detalhar_mesa_page.dart';
-import 'produto/controllers/produto_controller.dart';
+import 'ui/caixa/caixa_page.dart';
+import 'ui/configuracao/configuracao_page.dart';
+import 'ui/home/home_page.dart';
+import 'ui/login/controllers/usuario_controller.dart';
+import 'ui/login/login_page.dart';
+import 'ui/mesa/controllers/mesa_controller.dart';
+import 'ui/mesa/mesa_page.dart';
+import 'ui/mesa/widgets/detalhar_mesa_page.dart';
+import 'ui/pedido/controllers/pedido_controller.dart';
+import 'ui/pedido/pedido_page.dart';
+import 'ui/pedido/widgets/pedido_item_page.dart';
+import 'ui/produto/controllers/produto_controller.dart';
+import 'ui/produto/produto_page.dart';
+import 'ui/produto/widgets/grupo_page.dart';
+import 'ui/recebimento/recebimento_page.dart';
 
 class MainAPP extends StatefulWidget {
   @override
@@ -25,6 +27,7 @@ class _MainAPPState extends State<MainAPP> {
   void initState() {
     super.initState();
     GetIt getIt = GetIt.instance;
+    getIt.registerSingleton<UsuarioController>(UsuarioController());
     getIt.registerSingleton<MesaController>(MesaController());
     getIt.registerSingleton<PedidoController>(PedidoController());
     getIt.registerSingleton<ProdutoController>(ProdutoController());
@@ -32,16 +35,13 @@ class _MainAPPState extends State<MainAPP> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: getProviders(),
-      child: MaterialApp(
-        title: "Otica App",
-        debugShowCheckedModeBanner: false,
-        initialRoute: "login",
-        routes: getRoutes(),
-        theme: getTheme(),
-        // supportedLocales: [const Locale('pt', 'BR')],
-      ),
+    return MaterialApp(
+      title: "Metre POS",
+      debugShowCheckedModeBanner: false,
+      initialRoute: "login",
+      routes: getRoutes(),
+      theme: getTheme(),
+      // supportedLocales: [const Locale('pt', 'BR')],
     );
   }
 
@@ -52,7 +52,9 @@ class _MainAPPState extends State<MainAPP> {
       "mesa": (context) => MesaPage(),
       "detalharMesa": (context) => DetalharMesaPage(),
       "pedido": (context) => PedidoPage(),
+      "item": (context) => PedidoItemPage(),
       "produto": (context) => ProdutoPage(),
+      "grupo": (context) => GrupoPage(),
       "caixa": (context) => CaixaPage(),
       "recebimento": (context) => RecebimentoPage(),
       "configuracao": (context) => ConfigurcaoPage(),
@@ -70,11 +72,11 @@ class _MainAPPState extends State<MainAPP> {
         iconTheme: IconThemeData(color: Colors.white));
   }
 
-  List<SingleChildCloneableWidget> getProviders() {
-    return [
-      ChangeNotifierProvider<UsuarioBloc>.value(
-        value: UsuarioBloc(),
-      ),
-    ];
-  }
+  // List<SingleChildCloneableWidget> getProviders() {
+  //   return [
+  //     ChangeNotifierProvider<UsuarioBloc>.value(
+  //       value: UsuarioBloc(),
+  //     ),
+  //   ];
+  // }
 }

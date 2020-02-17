@@ -19,7 +19,6 @@ dependencies:
   
   shared_preferences: ^0.5.6+1
 
-  provider: 
   mobx: 
   flutter_mobx: 
   
