@@ -10,8 +10,9 @@ class PedidoService extends HttpUtils{
   PedidoService(String endpoint) : super(endpoint);
 
   Future<PedidoModel> getPedido(int idPedido) async {
+    String url = "${Constants.apiUrl+endpoint}$idPedido";
     return await http
-        .get("${Constants.apiUrl+endpoint}$idPedido")
+        .get(url)
         .timeout(Constants.timeout)
         .then((response) {
       if (response.statusCode == 200) {

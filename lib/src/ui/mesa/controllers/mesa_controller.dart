@@ -20,7 +20,7 @@ abstract class _MesaControllerBase with Store {
   @action
   void abrirMesa() {
     mesaService.abrirMesa(mesaModel).then((mesaSalva) {
-      if (mesaSalva.idMesa != null) {
+      if (mesaSalva != null) {
         mesaModel = mesaSalva;
       }
     });
@@ -36,6 +36,7 @@ abstract class _MesaControllerBase with Store {
 
   @action
   void filtrar(String text) {
-    mesasFiltradas = mesas.where((e) => e.numeroMesa.startsWith(text)).toList();
+    mesasFiltradas.clear();
+    mesasFiltradas.addAll(mesas.where((e) => e.numeroMesa.startsWith(text)).toList());
   }
 }

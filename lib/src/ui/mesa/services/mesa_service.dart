@@ -26,7 +26,7 @@ class MesaService extends HttpUtils {
     String url = '${Constants.apiUrl + endpoint}abrir/';
     return await http
         .post(url,
-            headers: Constants.requestHeaders, body: json.encode(mesaModel))
+            headers: Constants.requestHeaders, body: json.encode(mesaModel.toJson()))
         .timeout(Constants.timeout)
         .then((response) {
       if (response.hashCode == 200) {

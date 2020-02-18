@@ -39,13 +39,13 @@ class _MesaPageState extends State<MesaPage> {
                 onPressed: searchPressed,
               )),
           // drawer: CustomDrawer(),
-          body: content(context),
+          body: content(),
         );
       }),
     );
   }
 
-  content(BuildContext context) {
+  content() {
     return mesaController.mesasFiltradas.isEmpty
         ? Center(
             child: Container(
@@ -99,12 +99,15 @@ class _MesaPageState extends State<MesaPage> {
         ),
       ),
       onTap: () {
+        
         mesaController.mesaModel = mesaModel;
         try {
           mesaController.abrirMesa();
-          pedidoController
-              .carregaPedido(mesaController.mesaModel.pedidoCorrente);
-          setDataTeste();
+          if (mesaController.mesaModel.pedidoCorrente != null) {
+            pedidoController
+                .carregaPedido(mesaController.mesaModel.pedidoCorrente);
+            setDataTeste();
+          }
           Navigator.pushNamed(context, 'novaMesa');
         } catch (err) {
           print('vish');

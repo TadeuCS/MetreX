@@ -6,6 +6,7 @@ import 'package:MetreX/src/ui/mesa/controllers/mesa_controller.dart';
 import 'package:MetreX/src/ui/pedido/controllers/pedido_controller.dart';
 import 'package:MetreX/src/ui/pedido/models/item_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
 class DetalharMesaPage extends StatefulWidget {
@@ -35,11 +36,13 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        // appBar: AppBar(),
-        body: content(),
-        floatingActionButton: buildFab(),
-      ),
+      child: Observer(builder: (_) {
+        return Scaffold(
+          // appBar: AppBar(),
+          body: content(),
+          floatingActionButton: buildFab(),
+        );
+      }),
     );
   }
 
@@ -65,7 +68,7 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
                     icons[index],
                   ),
                   onPressed: () {
-                    if(icons[index]==Icons.monetization_on){
+                    if (icons[index] == Icons.monetization_on) {
                       Navigator.pushNamed(context, 'recebimento');
                     }
                   }),
@@ -154,12 +157,15 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(10),
-                  child: CustomSubMenu(descricao: "Itens", sufixWidget: FloatingActionButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, 'pedido');
-                          },
-                          child: Icon(Icons.add),
-                        ),),
+                  child: CustomSubMenu(
+                    descricao: "Itens",
+                    sufixWidget: FloatingActionButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, 'pedido');
+                      },
+                      child: Icon(Icons.add),
+                    ),
+                  ),
                 ),
                 // Divider(),
                 Expanded(

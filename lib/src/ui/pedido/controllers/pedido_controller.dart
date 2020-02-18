@@ -1,4 +1,3 @@
-
 import 'package:MetreX/src/ui/pedido/models/pedido_model.dart';
 import 'package:MetreX/src/ui/pedido/services/pedido_service.dart';
 import 'package:mobx/mobx.dart';
@@ -15,9 +14,12 @@ abstract class _PedidoControllerBase with Store {
 
   @action
   void carregaPedido(int idPedido) {
-    pedidoService
-        .getPedido(idPedido)
-        .then((pedidoCarregado) => pedido = pedidoCarregado);
+    pedidoService.getPedido(idPedido).then((pedidoCarregado) {
+      if (pedidoCarregado != null) {
+        pedido = pedidoCarregado;
+      } else {
+        pedido = PedidoModel();
+      }
+    });
   }
-
 }
