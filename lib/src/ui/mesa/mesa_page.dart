@@ -1,10 +1,8 @@
-import 'package:MetreX/src/ui/pedido/controllers/pedido_controller.dart';
+import 'package:MetreX/src/shared/util/Session.dart';
 import 'package:MetreX/src/ui/pedido/models/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
 
-import 'controllers/mesa_controller.dart';
 import 'models/mesa_model.dart';
 
 class MesaPage extends StatefulWidget {
@@ -16,14 +14,12 @@ class _MesaPageState extends State<MesaPage> {
   static final String title = 'Metre X';
   Icon _searchIcon = Icon(Icons.search);
   Widget appBarTitle = Text(title);
-  MesaController mesaController = GetIt.I.get<MesaController>();
-  PedidoController pedidoController = GetIt.I.get<PedidoController>();
   TextEditingController _filter = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    mesaController.listarTodas();
+    Session.mesaController.listarTodas();
   }
 
   @override
@@ -46,7 +42,7 @@ class _MesaPageState extends State<MesaPage> {
   }
 
   content() {
-    return mesaController.mesasFiltradas.isEmpty
+    return Session.mesaController.mesasFiltradas.isEmpty
         ? Center(
             child: Container(
             width: 150,
@@ -58,7 +54,7 @@ class _MesaPageState extends State<MesaPage> {
               crossAxisCount: 4,
             ),
             children:
-                mesaController.mesasFiltradas.map((e) => gridItem(e)).toList(),
+                Session.mesaController.mesasFiltradas.map((e) => gridItem(e)).toList(),
           );
   }
 
@@ -99,18 +95,17 @@ class _MesaPageState extends State<MesaPage> {
         ),
       ),
       onTap: () {
-        
-        mesaController.mesaModel = mesaModel;
+        Session.mesaController.mesaModel = mesaModel;
         try {
-          mesaController.abrirMesa();
-          if (mesaController.mesaModel.pedidoCorrente != null) {
-            pedidoController
-                .carregaPedido(mesaController.mesaModel.pedidoCorrente);
-            setDataTeste();
-          }
-          Navigator.pushNamed(context, 'novaMesa');
+          // mesaController.abrirMesa();
+          // if (mesaController.mesaModel.pedidoCorrente != null) {
+          //   pedidoController
+          //       .carregaPedido(mesaController.mesaModel.pedidoCorrente);
+          // }
+          setDataTeste();
+          Navigator.pushNamed(context, 'detalharMesa');
         } catch (err) {
-          print('vish');
+          print('vish\n$err');
         }
       },
     );
@@ -126,7 +121,7 @@ class _MesaPageState extends State<MesaPage> {
         this.appBarTitle = new TextField(
           style: TextStyle(color: Theme.of(context).indicatorColor),
           controller: _filter,
-          onChanged: mesaController.filtrar,
+          onChanged: Session.mesaController.filtrar,
           keyboardType: TextInputType.number,
           decoration: new InputDecoration(
               // prefixIcon: new Icon(Icons.search),
@@ -146,21 +141,21 @@ class _MesaPageState extends State<MesaPage> {
   }
 
   void setDataTeste() {
-    pedidoController.pedido.itens.add(ItemModel(
+    Session.pedidoController.pedido.itens.add(ItemModel(
         idProduto: 1, descricao: "Coca Cola 350ml", qtde: 2, preco: 5));
-    pedidoController.pedido.itens.add(ItemModel(
+    Session.pedidoController.pedido.itens.add(ItemModel(
         idProduto: 1, descricao: "Chopp Brahma 500ml", qtde: 3, preco: 9.5));
-    pedidoController.pedido.itens.add(ItemModel(
+    Session.pedidoController.pedido.itens.add(ItemModel(
         idProduto: 1, descricao: "Coca Cola 350ml", qtde: 2, preco: 5));
-    pedidoController.pedido.itens.add(ItemModel(
+    Session.pedidoController.pedido.itens.add(ItemModel(
         idProduto: 1, descricao: "Chopp Brahma 500ml", qtde: 3, preco: 9.5));
-    pedidoController.pedido.itens.add(ItemModel(
+    Session.pedidoController.pedido.itens.add(ItemModel(
         idProduto: 1, descricao: "Coca Cola 350ml", qtde: 2, preco: 5));
-    pedidoController.pedido.itens.add(ItemModel(
+    Session.pedidoController.pedido.itens.add(ItemModel(
         idProduto: 1, descricao: "Chopp Brahma 500ml", qtde: 3, preco: 9.5));
-    pedidoController.pedido.itens.add(ItemModel(
+    Session.pedidoController.pedido.itens.add(ItemModel(
         idProduto: 1, descricao: "Coca Cola 350ml", qtde: 2, preco: 5));
-    pedidoController.pedido.itens.add(ItemModel(
+    Session.pedidoController.pedido.itens.add(ItemModel(
         idProduto: 1, descricao: "Chopp Brahma 500ml", qtde: 3, preco: 9.5));
   }
 }

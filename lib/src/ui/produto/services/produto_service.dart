@@ -1,33 +1,27 @@
 import 'dart:convert';
 
 import 'package:MetreX/src/shared/util/Constants.dart';
-import 'package:MetreX/src/ui/produto/models/grupo_atendimento_model.dart';
+import 'package:MetreX/src/shared/util/HttpUtils.dart';
 import 'package:MetreX/src/ui/produto/models/produto_model.dart';
 import 'package:http/http.dart' as http;
 
-class ProdutoService{
-  String _url = "${Constants}ticket/";
+class ProdutoService extends HttpUtils {
+  ProdutoService(String endpoint) : super(endpoint);
 
-  Future<List<GrupoAtendimentoModel>> listarGrupoAtendimentos() async {
-    var response = await http.get("${_url}grupos/");
-    List<GrupoAtendimentoModel> grupos = List();
-    if (response.statusCode == 200) {
-      for (var item in jsonDecode(response.body)) {
-        grupos.add(GrupoAtendimentoModel.fromJson(item));
+  Future<List<ProdutoModel>> listarProdutosByGrupoAtendimento(
+      int idGrupo) async {
+    String url =
+        "${Constants.apiUrl + endpoint + (idGrupo == null ? '' : idGrupo.toString())}";
+    return await http.get(url).timeout(Constants.timeout).then((response) {
+      if (response.statusCode == 200) {
+        List produtos = jsonDecode(utf8.decode(response.bodyBytes));
+        return produtos.map((e) => ProdutoModel.fromJson(e)).toList();
+      } else {
+        return List<ProdutoModel>();
       }
-    }
-    return grupos;
-  }
-
-  Future<List<ProdutoModel>> listarProdutosByGrupoAtendimento(int idGrupo) async {
-    var response = await http
-        .get("${_url}produtos/${idGrupo == null ? "" : idGrupo.toString()}");
-    List<ProdutoModel> produtos = List();
-    if (response.statusCode == 200) {
-      for (var item in jsonDecode(response.body)) {
-        produtos.add(ProdutoModel.fromJson(item));
-      }
-    }
-    return produtos;
+    }).catchError((err) {
+      print('err\n$err');
+      return List<ProdutoModel>();
+    });
   }
 }

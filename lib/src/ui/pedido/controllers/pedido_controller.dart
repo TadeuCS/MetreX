@@ -10,7 +10,7 @@ abstract class _PedidoControllerBase with Store {
   PedidoService pedidoService = PedidoService('pedido/');
 
   @observable
-  var pedido = PedidoModel();
+  var pedido = PedidoModel(itens: List());
 
   @action
   void carregaPedido(int idPedido) {

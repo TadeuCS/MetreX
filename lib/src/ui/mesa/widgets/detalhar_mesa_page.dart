@@ -41,62 +41,95 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
           // appBar: AppBar(),
           body: content(),
           floatingActionButton: buildFab(),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: BottomNavigationBar(
+              selectedItemColor: Colors.grey,
+              unselectedItemColor: Colors.grey,
+              showUnselectedLabels: true,
+              showSelectedLabels: true,
+              currentIndex: 0,
+              items: [
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.info),
+                  title: new Text('Itens'),
+                ),
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.add_box),
+                  title: new Text('Acréscimo'),
+                ),
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.remove),
+                  title: new Text('Desconto'),
+                ),
+                BottomNavigationBarItem(
+                  icon: new Icon(Icons.print),
+                  title: new Text('Imprimir'),
+                ),
+              ]),
         );
       }),
     );
   }
 
+  // buildFab() {
+  //   return FloatingActionButton(
+  //     elevation: 2,
+  //     child: Icon(Icons.monetization_on),
+  //     onPressed: () {},
+  //   );
+  // }
   Column buildFab() {
-    return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(
-          icons.length,
-          (index) => Container(
-            height: 70,
-            width: 56,
-            alignment: FractionalOffset.topCenter,
-            child: ScaleTransition(
-              scale: CurvedAnimation(
-                parent: _fabAnimation,
-                curve: Interval(0.0, 1.0 - index / icons.length / 2.0,
-                    curve: Curves.easeOut),
-              ),
-              child: FloatingActionButton(
-                  heroTag: null,
-                  mini: true,
-                  child: Icon(
-                    icons[index],
-                  ),
-                  onPressed: () {
-                    if (icons[index] == Icons.monetization_on) {
-                      Navigator.pushNamed(context, 'recebimento');
-                    }
-                  }),
+  return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(
+        icons.length,
+        (index) => Container(
+          height: 70,
+          width: 56,
+          alignment: FractionalOffset.topCenter,
+          child: ScaleTransition(
+            scale: CurvedAnimation(
+              parent: _fabAnimation,
+              curve: Interval(0.0, 1.0 - index / icons.length / 2.0,
+                  curve: Curves.easeOut),
             ),
-          ),
-        ).toList()
-          ..add(Container(
             child: FloatingActionButton(
                 heroTag: null,
-                child: AnimatedBuilder(
-                    animation: _fabAnimation,
-                    builder: (_, widget) {
-                      return Transform(
-                        transform: Matrix4.rotationZ(
-                            _fabAnimation.value * 0.5 * math.pi),
-                        alignment: FractionalOffset.center,
-                        child: Icon(_fabAnimation.isDismissed
-                            ? Icons.open_with
-                            : Icons.close),
-                      );
-                    }),
+                mini: true,
+                child: Icon(
+                  icons[index],
+                ),
                 onPressed: () {
-                  if (_fabAnimation.isDismissed)
-                    _fabAnimation.forward();
-                  else
-                    _fabAnimation.reverse();
+                  if (icons[index] == Icons.monetization_on) {
+                    Navigator.pushNamed(context, 'recebimento');
+                  }
                 }),
-          )));
+          ),
+        ),
+      ).toList()
+        ..add(Container(
+          child: FloatingActionButton(
+              heroTag: null,
+              child: AnimatedBuilder(
+                  animation: _fabAnimation,
+                  builder: (_, widget) {
+                    return Transform(
+                      transform: Matrix4.rotationZ(
+                          _fabAnimation.value * 0.5 * math.pi),
+                      alignment: FractionalOffset.center,
+                      child: Icon(_fabAnimation.isDismissed
+                          ? Icons.open_with
+                          : Icons.close),
+                    );
+                  }),
+              onPressed: () {
+                if (_fabAnimation.isDismissed)
+                  _fabAnimation.forward();
+                else
+                  _fabAnimation.reverse();
+              }),
+        )));
   }
 
   content() {

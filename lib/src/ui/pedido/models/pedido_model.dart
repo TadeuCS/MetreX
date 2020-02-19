@@ -1,9 +1,9 @@
 import 'item_model.dart';
 
 class PedidoModel{
-  int idPedido;
-  List<ItemModel> itens;
+  final int idPedido;
+  final List<ItemModel> itens;
 
-  PedidoModel();
-
+  PedidoModel({this.idPedido, this.itens});
+  
 }

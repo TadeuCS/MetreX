@@ -1,9 +1,7 @@
 import 'package:MetreX/src/shared/util/Constants.dart';
+import 'package:MetreX/src/shared/util/Session.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'controllers/usuario_controller.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,12 +12,10 @@ class _LoginPageState extends State<LoginPage> {
   final _form = GlobalKey<FormState>();
   final _scaffouldKey = GlobalKey<ScaffoldState>();
 
-  UsuarioController usuarioController;
-
   @override
   void initState() {
     super.initState();
-    usuarioController = GetIt.I.get<UsuarioController>();
+    Session();
     SharedPreferences.getInstance().then((variaveis) {
       Constants.prefs = variaveis;
       // if (Constants.prefs.getString('url') == null) {
@@ -89,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: TextFormField(
         onChanged: (text) {
-          usuarioController.usuarioModel.usuario = text.trim();
+          Session.usuarioController.usuarioModel.usuario = text.trim();
         },
         decoration: InputDecoration(
             hintText: 'Usuário',
@@ -109,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
       child: TextFormField(
         obscureText: true,
         onChanged: (text) {
-          usuarioController.usuarioModel.senha = text.trim();
+          Session.usuarioController.usuarioModel.senha = text.trim();
         },
         onEditingComplete: () => _login(context),
         decoration: InputDecoration(

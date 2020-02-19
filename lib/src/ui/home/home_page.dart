@@ -1,6 +1,5 @@
 import 'package:MetreX/src/ui/caixa/caixa_page.dart';
 import 'package:MetreX/src/ui/configuracao/configuracao_page.dart';
-import 'package:MetreX/src/ui/mesa/controllers/mesa_controller.dart';
 import 'package:MetreX/src/ui/mesa/mesa_page.dart';
 import 'package:flutter/material.dart';
 

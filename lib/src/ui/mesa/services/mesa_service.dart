@@ -9,16 +9,18 @@ class MesaService extends HttpUtils {
 
   Future<List<MesaModel>> listarTodas() async {
     String url = "${Constants.apiUrl + endpoint}";
-    return await http.get(url).timeout(Constants.timeout).then((response) {
+    return await http.get(url)
+    .timeout(Constants.timeout)
+    .then((response) {
       if (response.statusCode == 200) {
         List lista = json.decode(response.body);
         return lista.map((e) => MesaModel.fromJson(e)).toList();
       } else {
-        return List();
+        return List<MesaModel>();
       }
     }).catchError((err) {
       print(err);
-      return List();
+      return List<MesaModel>();
     });
   }
 
