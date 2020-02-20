@@ -2,12 +2,10 @@ import 'dart:math' as math;
 
 import 'package:MetreX/src/shared/contents/custom_item_totalizer.dart';
 import 'package:MetreX/src/shared/contents/custom_submenu.dart';
-import 'package:MetreX/src/ui/mesa/controllers/mesa_controller.dart';
-import 'package:MetreX/src/ui/pedido/controllers/pedido_controller.dart';
+import 'package:MetreX/src/shared/util/Session.dart';
 import 'package:MetreX/src/ui/pedido/models/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
 
 class DetalharMesaPage extends StatefulWidget {
   @override
@@ -16,13 +14,14 @@ class DetalharMesaPage extends StatefulWidget {
 
 class _DetalharMesaPageState extends State<DetalharMesaPage>
     with TickerProviderStateMixin {
-  MesaController mesaController = GetIt.I.get<MesaController>();
-  PedidoController pedidoController = GetIt.I.get<PedidoController>();
   AnimationController _fabAnimation;
   static const List<IconData> icons = const [
     Icons.print,
     Icons.monetization_on,
   ];
+
+  var pageController = PageController(initialPage: 0);
+  var currentIndex = 0;
 
   @override
   void initState() {
@@ -40,96 +39,112 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
         return Scaffold(
           // appBar: AppBar(),
           body: content(),
-          floatingActionButton: buildFab(),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: BottomNavigationBar(
-              selectedItemColor: Colors.grey,
-              unselectedItemColor: Colors.grey,
-              showUnselectedLabels: true,
-              showSelectedLabels: true,
-              currentIndex: 0,
-              items: [
-                BottomNavigationBarItem(
-                  icon: new Icon(Icons.info),
-                  title: new Text('Itens'),
-                ),
-                BottomNavigationBarItem(
-                  icon: new Icon(Icons.add_box),
-                  title: new Text('Acréscimo'),
-                ),
-                BottomNavigationBarItem(
-                  icon: new Icon(Icons.remove),
-                  title: new Text('Desconto'),
-                ),
-                BottomNavigationBarItem(
-                  icon: new Icon(Icons.print),
-                  title: new Text('Imprimir'),
-                ),
-              ]),
+          // floatingActionButton: buildFab(),
+          // floatingActionButtonLocation:
+          //     FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: buildBottomNavigationBar(),
         );
       }),
     );
   }
 
-  // buildFab() {
-  //   return FloatingActionButton(
-  //     elevation: 2,
-  //     child: Icon(Icons.monetization_on),
-  //     onPressed: () {},
-  //   );
-  // }
+  BottomNavigationBar buildBottomNavigationBar() {
+    return BottomNavigationBar(
+        selectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: true,
+        showSelectedLabels: true,
+        currentIndex: currentIndex,
+        onTap: (index) {
+          print('pagina clicada: $index');
+          setState(() {
+            currentIndex = index;
+            switch (currentIndex) {
+              case 2:
+                currentIndex = 1;
+                print('imprimindo...');
+                break;
+              case 3:
+                currentIndex = 1;
+                Navigator.pushNamed(context, 'recebimento');
+                break;
+              default:
+                 print('não implementado!');
+            }
+            pageController.jumpToPage(currentIndex);
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.info),
+            title: new Text('Itens'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.library_books),
+            title: Text('Totalizadores'),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.print),
+            title: new Text('Imprimir'),
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.monetization_on),
+            title: new Text('Receber'),
+          ),
+        ]);
+  }
+
   Column buildFab() {
-  return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(
-        icons.length,
-        (index) => Container(
-          height: 70,
-          width: 56,
-          alignment: FractionalOffset.topCenter,
-          child: ScaleTransition(
-            scale: CurvedAnimation(
-              parent: _fabAnimation,
-              curve: Interval(0.0, 1.0 - index / icons.length / 2.0,
-                  curve: Curves.easeOut),
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: List.generate(
+          icons.length,
+          (index) => Container(
+            height: 70,
+            width: 56,
+            alignment: FractionalOffset.topCenter,
+            child: ScaleTransition(
+              scale: CurvedAnimation(
+                parent: _fabAnimation,
+                curve: Interval(0.0, 1.0 - index / icons.length / 2.0,
+                    curve: Curves.easeOut),
+              ),
+              child: FloatingActionButton(
+                  heroTag: null,
+                  mini: true,
+                  child: Icon(
+                    icons[index],
+                  ),
+                  onPressed: () {
+                    if (icons[index] == Icons.monetization_on) {
+                      Navigator.pushNamed(context, 'recebimento');
+                    }
+                  }),
             ),
+          ),
+        ).toList()
+          ..add(Container(
             child: FloatingActionButton(
                 heroTag: null,
-                mini: true,
-                child: Icon(
-                  icons[index],
-                ),
+                child: AnimatedBuilder(
+                    animation: _fabAnimation,
+                    builder: (_, widget) {
+                      return Transform(
+                        transform: Matrix4.rotationZ(
+                            _fabAnimation.value * 0.5 * math.pi),
+                        alignment: FractionalOffset.center,
+                        child: Icon(_fabAnimation.isDismissed
+                            ? Icons.open_with
+                            : Icons.close),
+                      );
+                    }),
                 onPressed: () {
-                  if (icons[index] == Icons.monetization_on) {
-                    Navigator.pushNamed(context, 'recebimento');
-                  }
+                  if (_fabAnimation.isDismissed)
+                    _fabAnimation.forward();
+                  else
+                    _fabAnimation.reverse();
                 }),
-          ),
-        ),
-      ).toList()
-        ..add(Container(
-          child: FloatingActionButton(
-              heroTag: null,
-              child: AnimatedBuilder(
-                  animation: _fabAnimation,
-                  builder: (_, widget) {
-                    return Transform(
-                      transform: Matrix4.rotationZ(
-                          _fabAnimation.value * 0.5 * math.pi),
-                      alignment: FractionalOffset.center,
-                      child: Icon(_fabAnimation.isDismissed
-                          ? Icons.open_with
-                          : Icons.close),
-                    );
-                  }),
-              onPressed: () {
-                if (_fabAnimation.isDismissed)
-                  _fabAnimation.forward();
-                else
-                  _fabAnimation.reverse();
-              }),
-        )));
+          )));
   }
 
   content() {
@@ -137,8 +152,17 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
       child: Column(
         children: <Widget>[
           buildNumConta(),
-          buildItens(),
-          buildTotalizadores(),
+          Expanded(
+            child: PageView(
+              controller: pageController,
+              physics: NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              children: <Widget>[
+                buildItens(),
+                buildTotalizadores(),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -168,7 +192,7 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
                     bottomRight: Radius.circular(30),
                     bottomLeft: Radius.circular(30))),
             child: Text(
-              '${mesaController.mesaModel.numeroMesa}',
+              '${Session.mesaController.mesaModel.numeroMesa}',
               style: TextStyle(
                   color: Theme.of(context).indicatorColor,
                   fontSize: 25,
@@ -181,84 +205,76 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
   }
 
   buildItens() {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(5),
-        child: Card(
-          child: Stack(children: [
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: CustomSubMenu(
-                    descricao: "Itens",
-                    sufixWidget: FloatingActionButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, 'pedido');
-                      },
-                      child: Icon(Icons.add),
-                    ),
-                  ),
+    return Card(
+      child: Stack(children: [
+        Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: CustomSubMenu(
+                descricao: "Itens",
+                sufixWidget: FloatingActionButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'pedido');
+                  },
+                  child: Icon(Icons.add),
                 ),
-                // Divider(),
-                Expanded(
-                  child: ListView(
-                    // physics: ScrollPhysics(),
-                    // shrinkWrap: true,
-                    children: <Widget>[
-                      // buildTable(),
-                      buildList(),
-                    ],
-                  ),
-                ),
-              ],
+              ),
             ),
-          ]),
+            // Divider(),
+            Expanded(
+              child: ListView(
+                // physics: ScrollPhysics(),
+                // shrinkWrap: true,
+                children: <Widget>[
+                  // buildTable(),
+                  buildList(),
+                ],
+              ),
+            ),
+          ],
         ),
-      ),
+      ]),
     );
   }
 
   buildTotalizadores() {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      child: Card(
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(80, 0, 80, 20),
-          child: Column(
-            children: <Widget>[
-              CustomSubMenu(descricao: "Totalizadores"),
-              CustomItemTotalizer(
-                label: '(+) SubTotal: ',
-                value: 'R\$ 200,00',
-              ),
-              CustomItemTotalizer(
-                label: '(+) Acréscimo: ',
-                value: 'R\$ 1,00',
-              ),
-              CustomItemTotalizer(
-                label: '(+) Taxa Serviço: ',
-                value: 'R\$ 20,00',
-              ),
-              CustomItemTotalizer(
-                label: '(+) Couvert: ',
-                value: 'R\$ 10,00',
-              ),
-              CustomItemTotalizer(
-                label: '(-) Desconto: ',
-                value: 'R\$ 2,00',
-              ),
-              CustomItemTotalizer(
-                label: '(-) Recebido: ',
-                value: 'R\$ 20,00',
-              ),
-              CustomItemTotalizer(
-                label: '(=) Total: ',
-                value: 'R\$ 209,00',
-                isTotalizer: true,
-              ),
-            ],
-          ),
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: <Widget>[
+            CustomSubMenu(descricao: "Totalizadores"),
+            CustomItemTotalizer(
+              label: '(+) SubTotal: ',
+              value: 'R\$ 200,00',
+            ),
+            CustomItemTotalizer(
+              label: '(+) Acréscimo: ',
+              value: 'R\$ 1,00',
+            ),
+            CustomItemTotalizer(
+              label: '(+) Taxa Serviço: ',
+              value: 'R\$ 20,00',
+            ),
+            CustomItemTotalizer(
+              label: '(+) Couvert: ',
+              value: 'R\$ 10,00',
+            ),
+            CustomItemTotalizer(
+              label: '(-) Desconto: ',
+              value: 'R\$ 2,00',
+            ),
+            CustomItemTotalizer(
+              label: '(-) Recebido: ',
+              value: 'R\$ 20,00',
+            ),
+            CustomItemTotalizer(
+              label: '(=) Total: ',
+              value: 'R\$ 209,00',
+              isTotalizer: true,
+            ),
+          ],
         ),
       ),
     );
@@ -271,9 +287,9 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
         physics: ScrollPhysics(),
         separatorBuilder: (_, index) => Divider(),
         shrinkWrap: true,
-        itemCount: pedidoController.pedido.itens.length,
+        itemCount: Session.pedidoController.pedido.itens.length,
         itemBuilder: (_, index) {
-          ItemModel e = pedidoController.pedido.itens[index];
+          ItemModel e = Session.pedidoController.pedido.itens[index];
           return ListTile(
             title: Text(e.descricao),
             subtitle: Text('${e.qtde} x ${e.preco} = ${e.total}'),
@@ -310,7 +326,7 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
   List<TableRow> _buildTableRows() {
     List<TableRow> rows = List();
     rows.add(_buildRow(["Produto", "Qtde", "Preço", "Total"], true));
-    rows.addAll(pedidoController.pedido.itens
+    rows.addAll(Session.pedidoController.pedido.itens
         .map((e) => _buildRow([
               e.descricao,
               e.qtde.toStringAsFixed(3),

@@ -1,4 +1,3 @@
-import 'package:MetreX/src/shared/util/Session.dart';
 import 'package:flutter/material.dart';
 
 class PedidoItemPage extends StatefulWidget {
@@ -21,22 +20,169 @@ class _PedidoItemPageState extends State<PedidoItemPage> {
   }
 
   buildContent() {
-    return ListView(
-      padding: const EdgeInsets.all(10),
-      children: <Widget>[
-        ListTile(
-          title: Text(
-            Session.produtoController.produtoModel.descricao,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+    return Container(
+      // padding: const EdgeInsets.all(10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Text(
+                          'Pastel de milho',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 18),
+                        ),
+                      ),
+                      Text(
+                        'R\$ 5,00',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.grey),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          color: Colors.grey[300],
+                          child: Text(
+                            'Prato composto com arroz integral, sal, brócolis e orégano.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          RaisedButton(
+                              child: Text('SEM GELO',
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () {}),
+                          RaisedButton(
+                              child: Text('SEM AÇUCAR',
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () {}),
+                          RaisedButton(
+                              child: Text('GELO E LIMÃO',
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () {}),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: Icon(
+                              Icons.chat,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          Text(
+                            'Recado',
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          Expanded(
+                              child: Text(
+                            '0/255',
+                            textAlign: TextAlign.right,
+                          )),
+                        ],
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                            hintText: 'Ex: Sem Cebola, Sem Gelo',
+                            border: OutlineInputBorder()),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-          subtitle: Text('R\$ ${Session.produtoController.produtoModel.preco.toStringAsFixed(2)}', style: TextStyle(fontWeight: FontWeight.w500),),
-        ),
-        TextFormField(
-          
-          decoration: InputDecoration(
+          Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    top: BorderSide(color: Colors.grey[400], width: 0.8))),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      margin: const EdgeInsets.only(right: 5),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.all(Radius.circular(4))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.remove),
+                            onPressed: null,
+                          ),
+                          Text('1'),
+                          IconButton(
+                              icon: Icon(
+                                Icons.add,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              onPressed: () {}),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: InkWell(
+                      onTap: () {
+                        print('cliquei');
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            borderRadius: BorderRadius.all(Radius.circular(4))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Adicionar',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            Text('R\$ 5,00',
+                                style: TextStyle(color: Colors.white)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }

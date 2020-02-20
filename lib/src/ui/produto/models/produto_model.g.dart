@@ -12,6 +12,7 @@ ProdutoModel _$ProdutoModelFromJson(Map<String, dynamic> json) {
     idGrupo: json['idGrupo'] as int,
     descricao: json['descricao'] as String,
     preco: (json['preco'] as num)?.toDouble(),
+    fracionado: json['fracionado'] as bool,
   );
 }
 
@@ -21,4 +22,5 @@ Map<String, dynamic> _$ProdutoModelToJson(ProdutoModel instance) =>
       'idGrupo': instance.idGrupo,
       'descricao': instance.descricao,
       'preco': instance.preco,
+      'fracionado': instance.fracionado,
     };

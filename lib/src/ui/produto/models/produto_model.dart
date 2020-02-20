@@ -10,8 +10,9 @@ class ProdutoModel{
   final int idGrupo;
   final String descricao;
   final double preco;
+  final bool fracionado;
 
-  ProdutoModel({this.idProduto, this.idGrupo, this.descricao, this.preco});
+  ProdutoModel({this.idProduto, this.idGrupo, this.descricao, this.preco, this.fracionado=false});
 
   factory ProdutoModel.fromJson(Map<String, dynamic> json) => _$ProdutoModelFromJson(json);
 
