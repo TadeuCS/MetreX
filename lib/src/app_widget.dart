@@ -17,6 +17,7 @@ import 'ui/produto/controllers/produto_controller.dart';
 import 'ui/produto/produto_page.dart';
 import 'ui/produto/widgets/grupo_page.dart';
 import 'ui/recebimento/recebimento_page.dart';
+import 'ui/recebimento/widget/forma_recebimento_page.dart';
 
 class MainAPP extends StatefulWidget {
   @override
@@ -59,6 +60,7 @@ class _MainAPPState extends State<MainAPP> {
       "grupo": (context) => GrupoPage(),
       "caixa": (context) => CaixaPage(),
       "recebimento": (context) => RecebimentoPage(),
+      "forma": (context) => FormaRecebimentoPage(),
       "configuracao": (context) => ConfigurcaoPage(),
     };
   }

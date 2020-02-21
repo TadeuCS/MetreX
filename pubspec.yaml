@@ -16,7 +16,8 @@ dependencies:
   flutter_launcher_icons: ^0.7.4
   http: 
   json_annotation:
-  intl: ^0.16.0
+  intl: 
+  flutter_masked_text: 
   
   shared_preferences: ^0.5.6+1
 

@@ -20,105 +20,134 @@ class _PedidoItemPageState extends State<PedidoItemPage> {
   }
 
   buildContent() {
-    return Container(
-      // padding: const EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10),
+    return Stack(
+      children: <Widget>[
+        Container(
+          padding: const EdgeInsets.all(10),
+          child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Container(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          'Pastel de milho',
-                          style: TextStyle(
-                              fontWeight: FontWeight.w700, fontSize: 18),
-                        ),
-                      ),
-                      Text(
-                        'R\$ 5,00',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Colors.grey),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          color: Colors.grey[300],
-                          child: Text(
-                            'Prato composto com arroz integral, sal, brócolis e orégano.',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          RaisedButton(
-                              child: Text('SEM GELO',
-                                  style: TextStyle(color: Colors.white)),
-                              onPressed: () {}),
-                          RaisedButton(
-                              child: Text('SEM AÇUCAR',
-                                  style: TextStyle(color: Colors.white)),
-                              onPressed: () {}),
-                          RaisedButton(
-                              child: Text('GELO E LIMÃO',
-                                  style: TextStyle(color: Colors.white)),
-                              onPressed: () {}),
-                        ],
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5),
-                            child: Icon(
-                              Icons.chat,
-                              color: Colors.black87,
-                            ),
-                          ),
-                          Text(
-                            'Recado',
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          Expanded(
-                              child: Text(
-                            '0/255',
-                            textAlign: TextAlign.right,
-                          )),
-                        ],
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                            hintText: 'Ex: Sem Cebola, Sem Gelo',
-                            border: OutlineInputBorder()),
-                      )
-                    ],
-                  ),
-                )
+                produtoDetail(),
+                recados(),
               ],
             ),
           ),
-          Container(
+        ),
+        Container(
+          alignment: Alignment.bottomCenter,
+          child: footerButtons(),
+        )
+      ],
+    );
+    // return Container(
+    //   padding: const EdgeInsets.all(10),
+    //   child: Column(
+    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //     children: <Widget>[
+    //       Padding(
+    //         padding: const EdgeInsets.all(10),
+    //         child: Column(
+    //           children: <Widget>[
+    //             produtoDetail(),
+    //             recados()
+    //           ],
+    //         ),
+    //       ),
+    //       footerButtons(),
+    //     ],
+    //   ),
+    // );
+  }
+
+  recados() {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            RaisedButton(
+                child: Text('SEM GELO', style: TextStyle(color: Colors.white)),
+                onPressed: () {}),
+            RaisedButton(
+                child:
+                    Text('SEM AÇUCAR', style: TextStyle(color: Colors.white)),
+                onPressed: () {}),
+            RaisedButton(
+                child:
+                    Text('GELO E LIMÃO', style: TextStyle(color: Colors.white)),
+                onPressed: () {}),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 5),
+              child: Icon(
+                Icons.chat,
+                color: Colors.black87,
+              ),
+            ),
+            Text(
+              'Recado',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            Expanded(
+                child: Text(
+              '0/255',
+              textAlign: TextAlign.right,
+            )),
+          ],
+        ),
+        TextFormField(
+          decoration: InputDecoration(
+              hintText: 'Ex: Sem Cebola, Sem Gelo',
+              border: OutlineInputBorder()),
+        )
+      ],
+    );
+  }
+
+  Container produtoDetail() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              'Pastel de milho',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+            ),
+          ),
+          Text(
+            'R\$ 5,00',
+            style: TextStyle(
+                fontWeight: FontWeight.w600, fontSize: 16, color: Colors.grey),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              color: Colors.grey[300],
+              child: Text(
+                'Prato composto com arroz integral, sal, brócolis e orégano.',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container footerButtons() {
+    return MediaQuery.of(context).viewInsets.bottom > 0
+        ? Container()
+        : Container(
             decoration: BoxDecoration(
                 border: Border(
                     top: BorderSide(color: Colors.grey[400], width: 0.8))),
@@ -180,9 +209,6 @@ class _PedidoItemPageState extends State<PedidoItemPage> {
                 ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
+          );
   }
 }
