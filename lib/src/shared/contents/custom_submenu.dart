@@ -3,16 +3,13 @@ import 'package:flutter/material.dart';
 class CustomSubMenu extends StatelessWidget {
   final String descricao;
   final TextAlign align;
-  Widget sufixWidget;
+  final Widget sufixWidget;
 
   CustomSubMenu(
-      {@required this.descricao,
+  this.descricao, {
       this.align = TextAlign.center,
-      this.sufixWidget}) {
-    if (this.sufixWidget == null) {
-      this.sufixWidget = Container();
-    }
-  }
+      this.sufixWidget});
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class CustomSubMenu extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                   color: Colors.grey),
             ),
-            sufixWidget,
+            sufixWidget??Container(),
           ],
         ),
         Divider(),

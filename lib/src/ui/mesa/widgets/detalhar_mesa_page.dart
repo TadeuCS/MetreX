@@ -212,7 +212,7 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
             Padding(
               padding: const EdgeInsets.all(10),
               child: CustomSubMenu(
-                descricao: "Itens",
+                 "Itens",
                 sufixWidget: FloatingActionButton(
                   onPressed: () {
                     Navigator.pushNamed(context, 'pedido');
@@ -244,7 +244,7 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
         padding: const EdgeInsets.all(10),
         child: Column(
           children: <Widget>[
-            CustomSubMenu(descricao: "Totalizadores"),
+            CustomSubMenu("Totalizadores"),
             CustomItemTotalizer(
               label: '(+) SubTotal: ',
               value: 'R\$ 200,00',
