@@ -1,3 +1,4 @@
+import 'package:MetreX/src/ui/caixa/controllers/caixa_controller.dart';
 import 'package:MetreX/src/ui/grupo/controllers/grupo_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -34,6 +35,7 @@ class _MainAPPState extends State<MainAPP> {
     getIt.registerSingleton<PedidoController>(PedidoController());
     getIt.registerSingleton<ProdutoController>(ProdutoController());
     getIt.registerSingleton<GrupoController>(GrupoController());
+    getIt.registerSingleton<CaixaController>(CaixaController());
   }
 
   @override

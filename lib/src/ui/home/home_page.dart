@@ -1,5 +1,6 @@
-import 'package:MetreX/src/ui/caixa/caixa_page.dart';
-import 'package:MetreX/src/ui/configuracao/configuracao_page.dart';
+import 'package:MetreX/src/shared/util/Session.dart';
+import 'package:MetreX/src/ui/caixa/models/caixa_item_model.dart';
+import 'package:MetreX/src/ui/caixa/models/caixa_model.dart';
 import 'package:MetreX/src/ui/mesa/mesa_page.dart';
 import 'package:flutter/material.dart';
 
@@ -9,8 +10,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
-
   @override
   void initState() {
     super.initState();
@@ -19,8 +18,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-          child: Scaffold(
-        body: content(context),
+      child: Scaffold(
+        body: MesaPage(),
         bottomNavigationBar: bottomNavigator(),
       ),
     );
@@ -28,42 +27,36 @@ class _HomePageState extends State<HomePage> {
 
   bottomNavigator() {
     return BottomNavigationBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        selectedItemColor: Theme.of(context).indicatorColor,
-        unselectedItemColor: Colors.white38,
+        selectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey,
         showSelectedLabels: true,
         onTap: onTabTapped,
-        currentIndex: _currentIndex,
+        currentIndex: 0,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_on),
-            title: _currentIndex == 0 ? Text('Mesas') : Container(),
+            title: Text('Mesas'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_atm),
-            title: _currentIndex == 1 ? Text('Caixa') : Container(),
+            title: Container(),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            title: _currentIndex == 2 ? Text('Configuração') : Container(),
+            title: Container(),
           ),
         ]);
   }
 
   void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
-
-  content(BuildContext context) {
-    switch (_currentIndex) {
+    switch (index) {
       case 1:
-        return CaixaPage();
+        Navigator.pushNamed(context, 'caixa');
+        break;
       case 2:
-        return ConfigurcaoPage();
+        Navigator.pushNamed(context, 'configuracao');
+        break;
       default:
-        return MesaPage();
     }
   }
 }

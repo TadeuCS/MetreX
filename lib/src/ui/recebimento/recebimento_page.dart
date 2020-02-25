@@ -16,109 +16,7 @@ class RecebimentoPage extends StatelessWidget {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate((_, index) {
-                return Column(
-                  // padding: const EdgeInsets.symmetric(vertical: 5),
-                  children: <Widget>[
-                    // Text(
-                    //   'Lista de Pagamentos',
-                    //   style: TextStyle(
-                    //       fontSize: 20,
-                    //       fontWeight: FontWeight.w700,
-                    //       color: Colors.grey),
-                    // ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.monetization_on,
-                        color: Colors.lightGreen,
-                      ),
-                      title: Text('Dinheiro'),
-                      subtitle: Text('R\$ 10,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.monetization_on,
-                        color: Colors.lightGreen,
-                      ),
-                      title: Text('Dinheiro'),
-                      subtitle: Text('R\$ 10,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.monetization_on,
-                        color: Colors.lightGreen,
-                      ),
-                      title: Text('Dinheiro'),
-                      subtitle: Text('R\$ 10,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-
-                    ListTile(
-                      leading: Icon(
-                        Icons.credit_card,
-                        color: Colors.orangeAccent,
-                      ),
-                      title: Text('Cartão'),
-                      subtitle: Text('R\$ 20,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.credit_card,
-                        color: Colors.orangeAccent,
-                      ),
-                      title: Text('Cartão'),
-                      subtitle: Text('R\$ 20,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.credit_card,
-                        color: Colors.orangeAccent,
-                      ),
-                      title: Text('Cartão'),
-                      subtitle: Text('R\$ 20,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.featured_play_list,
-                        color: Colors.lightBlue,
-                      ),
-                      title: Text('Personalizado'),
-                      subtitle: Text('R\$ 30,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.featured_play_list,
-                        color: Colors.lightBlue,
-                      ),
-                      title: Text('Personalizado'),
-                      subtitle: Text('R\$ 30,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-                    ListTile(
-                      leading: Icon(
-                        Icons.featured_play_list,
-                        color: Colors.lightBlue,
-                      ),
-                      title: Text('Personalizado'),
-                      subtitle: Text('R\$ 30,00'),
-                      trailing: IconButton(
-                          icon: Icon(Icons.delete), onPressed: () {}),
-                    ),
-                  ],
-                );
+                return _content();
               }, childCount: 1),
             ),
           ],
@@ -126,6 +24,112 @@ class RecebimentoPage extends StatelessWidget {
         bottomNavigationBar: buildBottomNavigationBar(context),
       ),
     );
+  }
+
+  Column _content() {
+    return Column(
+                // padding: const EdgeInsets.symmetric(vertical: 5),
+                children: <Widget>[
+                  // Text(
+                  //   'Lista de Pagamentos',
+                  //   style: TextStyle(
+                  //       fontSize: 20,
+                  //       fontWeight: FontWeight.w700,
+                  //       color: Colors.grey),
+                  // ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.monetization_on,
+                      color: Colors.lightGreen,
+                    ),
+                    title: Text('Dinheiro'),
+                    subtitle: Text('R\$ 10,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.monetization_on,
+                      color: Colors.lightGreen,
+                    ),
+                    title: Text('Dinheiro'),
+                    subtitle: Text('R\$ 10,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.monetization_on,
+                      color: Colors.lightGreen,
+                    ),
+                    title: Text('Dinheiro'),
+                    subtitle: Text('R\$ 10,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+
+                  ListTile(
+                    leading: Icon(
+                      Icons.credit_card,
+                      color: Colors.orangeAccent,
+                    ),
+                    title: Text('Cartão'),
+                    subtitle: Text('R\$ 20,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.credit_card,
+                      color: Colors.orangeAccent,
+                    ),
+                    title: Text('Cartão'),
+                    subtitle: Text('R\$ 20,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.credit_card,
+                      color: Colors.orangeAccent,
+                    ),
+                    title: Text('Cartão'),
+                    subtitle: Text('R\$ 20,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.featured_play_list,
+                      color: Colors.lightBlue,
+                    ),
+                    title: Text('Personalizado'),
+                    subtitle: Text('R\$ 30,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.featured_play_list,
+                      color: Colors.lightBlue,
+                    ),
+                    title: Text('Personalizado'),
+                    subtitle: Text('R\$ 30,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.featured_play_list,
+                      color: Colors.lightBlue,
+                    ),
+                    title: Text('Personalizado'),
+                    subtitle: Text('R\$ 30,00'),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete), onPressed: () {}),
+                  ),
+                ],
+              );
   }
 
   BottomNavigationBar buildBottomNavigationBar(BuildContext context) {

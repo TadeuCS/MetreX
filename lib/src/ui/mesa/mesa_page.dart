@@ -20,6 +20,7 @@ class _MesaPageState extends State<MesaPage> {
   void initState() {
     super.initState();
     Session.mesaController.listarTodas();
+//    searchPressed();
   }
 
   @override
@@ -30,7 +31,7 @@ class _MesaPageState extends State<MesaPage> {
           appBar: AppBar(
               centerTitle: true,
               title: appBarTitle,
-              leading: new IconButton(
+              leading: IconButton(
                 icon: _searchIcon,
                 onPressed: searchPressed,
               )),
@@ -114,28 +115,29 @@ class _MesaPageState extends State<MesaPage> {
   void searchPressed() {
     setState(() {
       if (this._searchIcon.icon == Icons.search) {
-        this._searchIcon = new Icon(
+        this._searchIcon = Icon(
           Icons.close,
           color: Theme.of(context).indicatorColor,
         );
-        this.appBarTitle = new TextField(
+        this.appBarTitle = TextField(
           style: TextStyle(color: Theme.of(context).indicatorColor),
+          autofocus: true,
           controller: _filter,
           onChanged: Session.mesaController.filtrar,
           keyboardType: TextInputType.number,
-          decoration: new InputDecoration(
-              // prefixIcon: new Icon(Icons.search),
+          decoration: InputDecoration(
+              // prefixIcon: Icon(Icons.search),
               hintText: 'Informe a Mesa',
               hintStyle: TextStyle(color: Theme.of(context).indicatorColor),
               errorText: null,
               errorStyle: TextStyle(color: Theme.of(context).indicatorColor)),
         );
       } else {
-        this._searchIcon = new Icon(
+        this._searchIcon = Icon(
           Icons.search,
           color: Theme.of(context).indicatorColor,
         );
-        this.appBarTitle = new Text(title);
+        this.appBarTitle = Text(title);
       }
     });
   }
