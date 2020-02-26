@@ -14,7 +14,7 @@ class CaixaPage extends StatefulWidget {
 
 class _CaixaPageState extends State<CaixaPage> {
   var scaffouldKey = GlobalKey<ScaffoldState>();
-  int _currentIndex = 0;
+  // int _currentIndex = 0;
 
   @override
   void initState() {
@@ -26,6 +26,7 @@ class _CaixaPageState extends State<CaixaPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        key: scaffouldKey,
         body: CustomScrollView(
           slivers: [
             SliverPersistentHeader(
@@ -44,37 +45,37 @@ class _CaixaPageState extends State<CaixaPage> {
           child: Icon(
             Icons.check,
           ),
-          onPressed: () {},
+          onPressed: () =>Navigator.pushNamed(context, 'conferencia'),
         ),
         // bottomNavigationBar: _bottomNavigationBar(),
       ),
     );
   }
 
-  _bottomNavigationBar() {
-    return BottomNavigationBar(
-        selectedItemColor: Colors.grey,
-        unselectedItemColor: Colors.grey,
-        showSelectedLabels: true,
-        onTap: onTabTapped,
-        currentIndex: _currentIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
-            title: Text('Abrir Caixa'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.check_circle),
-            title: Text('Fechar Caixa'),
-          ),
-        ]);
-  }
+  // _bottomNavigationBar() {
+  //   return BottomNavigationBar(
+  //       selectedItemColor: Colors.grey,
+  //       unselectedItemColor: Colors.grey,
+  //       showSelectedLabels: true,
+  //       onTap: onTabTapped,
+  //       currentIndex: _currentIndex,
+  //       items: [
+  //         BottomNavigationBarItem(
+  //           icon: Icon(Icons.add_circle),
+  //           title: Text('Abrir Caixa'),
+  //         ),
+  //         BottomNavigationBarItem(
+  //           icon: Icon(Icons.check_circle),
+  //           title: Text('Fechar Caixa'),
+  //         ),
+  //       ]);
+  // }
 
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
-  }
+  // void onTabTapped(int index) {
+  //   setState(() {
+  //     _currentIndex = index;
+  //   });
+  // }
 
   _content() {
     return Column(
@@ -110,7 +111,7 @@ class _CaixaPageState extends State<CaixaPage> {
         });
       },
       child: ListTile(
-        leading: ci.tipo == 'C'
+        leading: ci.tipoMovimento == 'C'
             ? Icon(
                 Icons.arrow_upward,
                 color: Colors.green[600],
@@ -119,7 +120,7 @@ class _CaixaPageState extends State<CaixaPage> {
                 Icons.arrow_downward,
                 color: Colors.red[600],
               ),
-        title: Text(ci.tipoMovimento),
+        title: Text(ci.tipo),
         subtitle: Text(ci.dataHora),
         trailing: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -159,73 +160,73 @@ class _CaixaPageState extends State<CaixaPage> {
     List<CaixaItemModel> itens = List();
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 10:37:12',
-      tipoMovimento: 'Abertura',
+      tipo: 'Abertura',
       historico: 'Abertura de Caixa',
-      tipo: 'C',
+      tipoMovimento: 'C',
       valor: 50,
       forma: 'Dinheiro',
     ));
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 16:37:12',
-      tipoMovimento: 'Recebimento',
+      tipo: 'Recebimento',
       historico: 'Recebimento do Pedido 1',
-      tipo: 'C',
+      tipoMovimento: 'C',
       valor: 50,
       forma: 'Dinheiro',
     ));
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 16:40:12',
-      tipoMovimento: 'Recebimento',
+      tipo: 'Recebimento',
       historico: 'Recebimento do Pedido 2',
-      tipo: 'C',
+      tipoMovimento: 'C',
       valor: 50,
       forma: 'C. Débito',
     ));
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 16:55:12',
-      tipoMovimento: 'Pagamento',
+      tipo: 'Pagamento',
       historico: 'Pagamento do Fornecedor X dos produtos Laranja e limão',
-      tipo: 'D',
+      tipoMovimento: 'D',
       valor: 50,
       forma: 'Dinheiro',
     ));
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 16:40:12',
-      tipoMovimento: 'Recebimento',
+      tipo: 'Recebimento',
       historico: 'Recebimento do Pedido 3',
-      tipo: 'C',
-      valor: 50,
+      tipoMovimento: 'C',
+      valor: 60,
       forma: 'C. Crédito',
     ));
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 16:37:12',
-      tipoMovimento: 'Sangria',
+      tipo: 'Sangria',
       historico: 'Sangria de valor do caixa',
-      tipo: 'D',
-      valor: 50,
+      tipoMovimento: 'D',
+      valor: 30,
       forma: 'Dinheiro',
     ));
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 16:37:12',
-      tipoMovimento: 'Estorno',
-      historico: 'Estorno do recebimento do Pedido 1',
-      tipo: 'D',
-      valor: 20.30,
-      forma: 'Cartão',
+      tipo: 'Estorno',
+      historico: 'Estorno do recebimento do Pedido 2',
+      tipoMovimento: 'D',
+      valor: 50,
+      forma: 'C. Débito',
     ));
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 16:37:12',
-      tipoMovimento: 'Credito',
+      tipo: 'Credito',
       historico: 'Recebimento de Crédito de cliente',
-      tipo: 'C',
+      tipoMovimento: 'C',
       valor: 50,
       forma: 'Dinheiro',
     ));
     itens.add(CaixaItemModel(
       dataHora: '20/02/2020 18:30:00',
-      tipoMovimento: 'Vale',
+      tipo: 'Vale',
       historico: 'Vale de Funcionário',
-      tipo: 'D',
+      tipoMovimento: 'D',
       valor: 30.5,
       forma: 'Dinheiro',
     ));

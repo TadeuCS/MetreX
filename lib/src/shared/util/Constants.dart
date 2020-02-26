@@ -1,3 +1,4 @@
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
@@ -13,6 +14,9 @@ class Constants {
   static final Map<String, String> requestHeaders = {
     'Content-Type': 'application/json'
   };
+
+  static final moneyMask =
+    MoneyMaskedTextController(decimalSeparator: ',', thousandSeparator: '.');
 
   Constants._privateConstructor();
 

@@ -1,6 +1,3 @@
-import 'package:MetreX/src/shared/util/Session.dart';
-import 'package:MetreX/src/ui/caixa/models/caixa_item_model.dart';
-import 'package:MetreX/src/ui/caixa/models/caixa_model.dart';
 import 'package:MetreX/src/ui/mesa/mesa_page.dart';
 import 'package:flutter/material.dart';
 

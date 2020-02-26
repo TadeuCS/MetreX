@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'ui/caixa/caixa_page.dart';
+import 'ui/caixa/widgets/conferencia_caixa_page.dart';
 import 'ui/configuracao/configuracao_page.dart';
 import 'ui/home/home_page.dart';
 import 'ui/login/controllers/usuario_controller.dart';
@@ -61,6 +62,7 @@ class _MainAPPState extends State<MainAPP> {
       "produto": (context) => ProdutoPage(),
       "grupo": (context) => GrupoPage(),
       "caixa": (context) => CaixaPage(),
+      "conferencia": (context) => ConferenciaCaixaPage(),
       "recebimento": (context) => RecebimentoPage(),
       "forma": (context) => FormaRecebimentoPage(),
       "configuracao": (context) => ConfigurcaoPage(),

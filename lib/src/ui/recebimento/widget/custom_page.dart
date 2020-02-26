@@ -1,10 +1,9 @@
+import 'package:MetreX/src/shared/util/Constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class CustomPage extends StatefulWidget {
   final String title;
-  final money =
-      MoneyMaskedTextController(decimalSeparator: ',', thousandSeparator: '.');
+
   CustomPage(this.title);
 
   @override
@@ -55,7 +54,7 @@ class _CustomPageState extends State<CustomPage> {
             children: <Widget>[
               Expanded(
                 child: TextFormField(
-                  controller: widget.money,
+                  controller: Constants.moneyMask,
                   autofocus: true,
                   textAlign: TextAlign.end,
                   keyboardType: TextInputType.number,
@@ -72,7 +71,7 @@ class _CustomPageState extends State<CustomPage> {
                     color: Colors.redAccent,
                   ),
                   onPressed: () {
-                    widget.money.text="0,00";
+                    Constants.moneyMask.text="0,00";
                   })
             ],
           ),

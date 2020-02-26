@@ -29,7 +29,7 @@ class CaixaItemPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ci.tipo == 'C'
+              ci.tipoMovimento == 'C'
                   ? Icon(
                       Icons.arrow_upward,
                       color: Colors.green,
@@ -39,7 +39,7 @@ class CaixaItemPage extends StatelessWidget {
                       color: Colors.red,
                     ),
               Text(
-                ci.tipoMovimento,
+                ci.tipo,
                 style: TextStyle(fontWeight: FontWeight.w800),
               ),
             ],

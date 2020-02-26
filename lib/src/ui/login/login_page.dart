@@ -1,3 +1,4 @@
+import 'package:MetreX/src/shared/contents/custom_dialog.dart';
 import 'package:MetreX/src/shared/util/Constants.dart';
 import 'package:MetreX/src/shared/util/Session.dart';
 import 'package:flutter/material.dart';
@@ -137,6 +138,7 @@ class _LoginPageState extends State<LoginPage> {
     // if (_form.currentState.validate()) {
       // usuarioController.login(context, _scaffouldKey);
     // }
-    Navigator.pushNamed(context, 'home');
+    // Navigator.pushNamed(context, 'home');
+    showSuccessAlert(context, 'Parabéns Dani BOT');
   }
 }

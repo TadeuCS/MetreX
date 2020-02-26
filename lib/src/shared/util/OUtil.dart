@@ -56,7 +56,7 @@ class OUtil {
       double.parse(str);
       return true;
     } on FormatException {
-      return false;      
+      return false;
     }
   }
 
@@ -137,5 +137,17 @@ class OUtil {
       text = "0.0";
     }
     return double.parse(text.trim());
+  }
+
+  static double getDoubleByMoney(String text){
+    if(text==null){
+      text="0.0";
+    }
+    text = text.replaceAll("R\$", "").replaceAll(".", "").replaceAll(",", ".").trim();
+    return double.parse(text);
+  }
+
+  static double totalizarLista(List<double> valores) {
+    return valores.reduce((value, element) => value + element);
   }
 }
