@@ -138,7 +138,6 @@ class _LoginPageState extends State<LoginPage> {
     // if (_form.currentState.validate()) {
       // usuarioController.login(context, _scaffouldKey);
     // }
-    // Navigator.pushNamed(context, 'home');
-    showSuccessAlert(context, 'Parabéns Dani BOT');
+    Navigator.pushNamed(context, 'home');
   }
 }
