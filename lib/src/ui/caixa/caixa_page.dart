@@ -271,10 +271,6 @@ class SliverAppBar extends SliverPersistentHeaderDelegate {
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.add),
-                      onPressed: () => Navigator.pushNamed(context, 'forma'),
-                    ),
                   ],
                 ),
               ),
