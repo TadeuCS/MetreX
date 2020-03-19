@@ -4,7 +4,6 @@ import 'package:json_annotation/json_annotation.dart';
 part 'produto_model.g.dart';
 
 @JsonSerializable()
-
 class ProdutoModel{
   final int idProduto;
   final int idGrupo;

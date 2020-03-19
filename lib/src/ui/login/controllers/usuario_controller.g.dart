@@ -26,18 +26,66 @@ mixin _$UsuarioController on _UsuarioControllerBase, Store {
     }, _$usuarioModelAtom, name: '${_$usuarioModelAtom.name}_set');
   }
 
-  final _$loginAsyncAction = AsyncAction('login');
+  final _$_UsuarioControllerBaseActionController =
+      ActionController(name: '_UsuarioControllerBase');
 
   @override
-  Future<void> login(
-      BuildContext context, GlobalKey<ScaffoldState> scaffoldState) {
-    return _$loginAsyncAction.run(() => super.login(context, scaffoldState));
+  void alterarUsuario(String value) {
+    final _$actionInfo = _$_UsuarioControllerBaseActionController.startAction();
+    try {
+      return super.alterarUsuario(value);
+    } finally {
+      _$_UsuarioControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
-  final _$editarAsyncAction = AsyncAction('editar');
+  @override
+  void alterarSenha(String value) {
+    final _$actionInfo = _$_UsuarioControllerBaseActionController.startAction();
+    try {
+      return super.alterarSenha(value);
+    } finally {
+      _$_UsuarioControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
-  Future<void> editar(GlobalKey<ScaffoldState> scaffoldState) {
-    return _$editarAsyncAction.run(() => super.editar(scaffoldState));
+  void login(BuildContext context, GlobalKey<ScaffoldState> scaffoldState) {
+    final _$actionInfo = _$_UsuarioControllerBaseActionController.startAction();
+    try {
+      return super.login(context, scaffoldState);
+    } finally {
+      _$_UsuarioControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void testarConexao(GlobalKey<ScaffoldState> scaffoldState, String urlTeste) {
+    final _$actionInfo = _$_UsuarioControllerBaseActionController.startAction();
+    try {
+      return super.testarConexao(scaffoldState, urlTeste);
+    } finally {
+      _$_UsuarioControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String validaUsuario(String value) {
+    final _$actionInfo = _$_UsuarioControllerBaseActionController.startAction();
+    try {
+      return super.validaUsuario(value);
+    } finally {
+      _$_UsuarioControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  String validaSenha(String value) {
+    final _$actionInfo = _$_UsuarioControllerBaseActionController.startAction();
+    try {
+      return super.validaSenha(value);
+    } finally {
+      _$_UsuarioControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 }

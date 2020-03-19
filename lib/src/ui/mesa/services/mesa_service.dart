@@ -9,7 +9,7 @@ class MesaService extends HttpUtils {
 
   Future<List<MesaModel>> listarTodas() async {
     String url = "${Constants.apiUrl + endpoint}";
-    return await http.get(url)
+    return await http.get(url, headers: Constants.requestHeaders)
     .timeout(Constants.timeout)
     .then((response) {
       if (response.statusCode == 200) {
@@ -31,8 +31,9 @@ class MesaService extends HttpUtils {
             headers: Constants.requestHeaders, body: json.encode(mesaModel.toJson()))
         .timeout(Constants.timeout)
         .then((response) {
-      if (response.hashCode == 200) {
-        return json.decode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200) {
+        var mesaJson = json.decode(utf8.decode(response.bodyBytes));
+        return MesaModel.fromJson(mesaJson);
       } else {
         return null;
       }

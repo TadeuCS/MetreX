@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:MetreX/src/shared/util/Constants.dart';
 import 'package:MetreX/src/shared/util/HttpUtils.dart';
@@ -9,14 +10,14 @@ class UsuarioService extends HttpUtils {
   UsuarioService(String endpoint) : super(endpoint);
 
   Future<http.Response> login(UsuarioModel usuarioModel) async {
-    url =
-        '${Constants.apiUrl + endpoint}login/${usuarioModel.usuario}/${usuarioModel.senha}';
+    url = '${Constants.apiUrl + endpoint}login/';
     print('$url');
+    var userJson = jsonEncode(usuarioModel);
+    print(userJson);
     var response = await http
-        //     .post('${url}login/', body: dataJson, headers: Constants.requestHeaders)
-        .post(url, headers: Constants.requestHeaders)
+        .post(url, body: userJson, headers: Constants.requestHeaders)
         .timeout(Constants.timeout);
-    print(response.statusCode);
+    print('${response.statusCode} - ${response.reasonPhrase}');
     return response;
   }
 

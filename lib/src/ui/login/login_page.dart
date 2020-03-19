@@ -1,8 +1,9 @@
-import 'package:MetreX/src/shared/contents/custom_dialog.dart';
 import 'package:MetreX/src/shared/util/Constants.dart';
 import 'package:MetreX/src/shared/util/Session.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'models/usuario_model.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -12,21 +13,18 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _form = GlobalKey<FormState>();
   final _scaffouldKey = GlobalKey<ScaffoldState>();
+  // var usuarioController=GetIt.I.get<UsuarioController>();
 
   @override
   void initState() {
     super.initState();
     Session();
-    SharedPreferences.getInstance().then((variaveis) {
-      Constants.prefs = variaveis;
-      // if (Constants.prefs.getString('url') == null) {
-        Constants.prefs.setString('url', Constants.apiUrl);
-      // }
-    });
+    Session.usuarioController.usuarioModel=UsuarioModel();
   }
 
   @override
   Widget build(BuildContext context) {
+    carregaUsuarioLogado();
     return Form(
       key: _form,
       child: SafeArea(
@@ -36,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
             children: <Widget>[
               _logo(context),
-              _email(context),
+              _usuario(context),
               _senha(context),
               _entrar(context),
             ],
@@ -81,21 +79,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Padding _email(BuildContext context) {
+  Padding _usuario(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: TextFormField(
-        onChanged: (text) {
-          Session.usuarioController.usuarioModel.usuario = text.trim();
-        },
+        onChanged: Session.usuarioController.alterarUsuario,
+        validator: Session.usuarioController.validaUsuario,
         decoration: InputDecoration(
             hintText: 'Usuário',
             prefixIcon: Icon(Icons.person),
             border: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor))),
-        validator: (text) {
-          return text.trim().isEmpty ? 'Informe o Usuário' : null;
-        },
       ),
     );
   }
@@ -105,18 +99,15 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.only(bottom: 15),
       child: TextFormField(
         obscureText: true,
-        onChanged: (text) {
-          Session.usuarioController.usuarioModel.senha = text.trim();
-        },
+        onChanged: Session.usuarioController.alterarSenha,
         onEditingComplete: () => _login(context),
+        validator: Session.usuarioController.validaSenha,
         decoration: InputDecoration(
             hintText: 'Senha',
             prefixIcon: Icon(Icons.lock),
             border: OutlineInputBorder(
                 borderSide: BorderSide(color: Theme.of(context).primaryColor))),
-        validator: (text) {
-          return text.trim().isEmpty ? 'Informe a senha' : null;
-        },
+        
       ),
     );
   }
@@ -135,9 +126,25 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _login(BuildContext context) {
-    // if (_form.currentState.validate()) {
-      // usuarioController.login(context, _scaffouldKey);
-    // }
-    Navigator.pushNamed(context, 'home');
+    if (_form.currentState.validate()) {
+      Session.usuarioController.login(context, _scaffouldKey);
+    }
+    //  Navigator.pushNamed(context, 'home');
+  }
+
+  void carregaUsuarioLogado() {
+    SharedPreferences.getInstance().then((variaveis) {
+      Constants.prefs = variaveis;
+      Constants.prefs.setString('url', Constants.apiUrl);
+      if (Session.usuarioController.validaLoginSalvo()) {
+        var usuario = Constants.prefs.getString("usuario");
+        var senha = Constants.prefs.getString("senha");
+        if (usuario != null && senha != null) {
+          Session.usuarioController.usuarioModel =
+              UsuarioModel(usuario: usuario, senha: senha);
+          Session.usuarioController.login(context, _scaffouldKey);
+        }
+      }
+    });
   }
 }

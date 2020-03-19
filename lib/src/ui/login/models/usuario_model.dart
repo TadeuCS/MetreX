@@ -1,30 +1,25 @@
+import 'package:MetreX/src/ui/login/models/empresa_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'usuario_model.g.dart';
 
+@JsonSerializable()
 class UsuarioModel {
   int idUsuario;
   String usuario;
+  String nome;
   String senha;
+  String foto;
   String email;
+  int caixaCorrente;
+  String perfil;
   bool ativo;
+  EmpresaModel empresa;
 
-  UsuarioModel(
-      {this.idUsuario, this.usuario, this.senha, this.email, this.ativo});
+  UsuarioModel({this.usuario, this.senha, this.email, this.ativo});
 
-  UsuarioModel.fromJson(Map<String, dynamic> json) {
-    idUsuario = json['idUsuario'];
-    usuario = json['nome'];
-    senha = json['senha'];
-    email = json['email'];
-    ativo = json['ativo'];
-  }
+  factory UsuarioModel.fromJson(Map<String, dynamic> json) =>
+      _$UsuarioModelFromJson(json);
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['idUsuario'] = this.idUsuario;
-    data['nome'] = this.usuario;
-    data['senha'] = this.senha;
-    data['email'] = this.email;
-    data['ativo'] = this.ativo;
-    return data;
-  }
+  Map<String, dynamic> toJson() => _$UsuarioModelToJson(this);
 }

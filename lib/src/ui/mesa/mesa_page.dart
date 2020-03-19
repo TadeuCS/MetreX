@@ -19,12 +19,14 @@ class _MesaPageState extends State<MesaPage> {
   @override
   void initState() {
     super.initState();
+    
     Session.mesaController.listarTodas();
 //    searchPressed();
   }
 
   @override
   Widget build(BuildContext context) {
+    Session.mesaController.verificandoMesas=true;
     return SafeArea(
       child: Observer(builder: (_) {
         return Scaffold(
@@ -54,8 +56,9 @@ class _MesaPageState extends State<MesaPage> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
             ),
-            children:
-                Session.mesaController.mesasFiltradas.map((e) => gridItem(e)).toList(),
+            children: Session.mesaController.mesasFiltradas
+                .map((e) => gridItem(e))
+                .toList(),
           );
   }
 
@@ -96,17 +99,16 @@ class _MesaPageState extends State<MesaPage> {
         ),
       ),
       onTap: () {
-        Session.mesaController.mesaModel = mesaModel;
-        try {
-          // mesaController.abrirMesa();
-          // if (mesaController.mesaModel.pedidoCorrente != null) {
-          //   pedidoController
-          //       .carregaPedido(mesaController.mesaModel.pedidoCorrente);
-          // }
-          setDataTeste();
-          Navigator.pushNamed(context, 'detalharMesa');
-        } catch (err) {
-          print('vish\n$err');
+        if (mesaModel.idMesa != null) {
+          Session.mesaController.mesaModel = mesaModel;
+          try {
+            setDataTeste();
+            Navigator.pushNamed(context, 'detalharMesa');
+          } catch (err) {
+            print('vish\n$err');
+          }
+        }else{
+          searchPressed();
         }
       },
     );
@@ -124,6 +126,9 @@ class _MesaPageState extends State<MesaPage> {
           autofocus: true,
           controller: _filter,
           onChanged: Session.mesaController.filtrar,
+          onEditingComplete: (){
+            Session.mesaController.abrirMesa(_filter.text.trim());
+          },
           keyboardType: TextInputType.number,
           decoration: InputDecoration(
               // prefixIcon: Icon(Icons.search),

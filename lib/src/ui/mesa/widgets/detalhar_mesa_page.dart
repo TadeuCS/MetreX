@@ -30,6 +30,7 @@ class _DetalharMesaPageState extends State<DetalharMesaPage>
       vsync: this,
       duration: const Duration(milliseconds: 100),
     );
+    Session.mesaController.verificandoMesas=false;
   }
 
   @override

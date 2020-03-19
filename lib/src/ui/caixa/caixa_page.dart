@@ -259,7 +259,7 @@ class SliverAppBar extends SliverPersistentHeaderDelegate {
           color: Theme.of(context).primaryColor,
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: ListView(
-            children: <Widget>[
+            children: <Widget>[ 
               Container(
                 height: 30,
                 child: Row(

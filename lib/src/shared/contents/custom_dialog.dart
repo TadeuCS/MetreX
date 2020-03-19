@@ -1,6 +1,6 @@
-import 'package:MetreX/src/shared/util/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 Future<bool> showConfirmDialog(
     BuildContext context, String title, String msg) async {
@@ -39,7 +39,7 @@ Future<bool> showInputNumberDialog(
     content: TextField(
       autofocus: true,
       textAlign: TextAlign.end,
-      controller: Constants.moneyMask,
+      controller: MoneyMaskedTextController(thousandSeparator: '.', decimalSeparator: '.'),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(labelText: msg, hintText: 'Ex: 10,55'),
     ),
@@ -74,7 +74,7 @@ Future<bool> showSuccessAlert(BuildContext context, String msg) async {
       ),
     ),
     actions: [
-      _OkButton(context),
+      _okButton(context),
     ],
 
   );
@@ -104,7 +104,7 @@ Future<bool> showWarningAlert(BuildContext context, String msg) async {
       ),
     ),
     actions: [
-      _OkButton(context),
+      _okButton(context),
     ],
 
   );
@@ -144,7 +144,7 @@ Future<bool> showInputTextDialog(
   );
 }
 
-_OkButton(BuildContext context) {
+_okButton(BuildContext context) {
   return FlatButton(
     child: Text("Ok"),
     onPressed: () {

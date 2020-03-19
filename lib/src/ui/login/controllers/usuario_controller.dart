@@ -6,30 +6,38 @@ import 'package:MetreX/src/ui/login/models/usuario_model.dart';
 import 'package:MetreX/src/ui/login/services/usuario_service.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+
 part 'usuario_controller.g.dart';
 
 class UsuarioController = _UsuarioControllerBase with _$UsuarioController;
 
 abstract class _UsuarioControllerBase with Store {
-  final UsuarioService usuarioService = UsuarioService("/");
+  final UsuarioService usuarioService = UsuarioService("usuario/");
+  static String token;
 
   @observable
-  var usuarioModel = UsuarioModel(usuario: 'administrador', senha: 'olivetadmin');
+  UsuarioModel usuarioModel;
 
   @action
-  Future<void> login(
-      BuildContext context, GlobalKey<ScaffoldState> scaffoldState) async {
-    await usuarioService.login(usuarioModel).then((response) {
+  void alterarUsuario(String value) => usuarioModel.usuario = value;
+
+  @action
+  void alterarSenha(String value) => usuarioModel.senha = value;
+
+  @action
+  void login(BuildContext context, GlobalKey<ScaffoldState> scaffoldState) {
+    usuarioService.login(usuarioModel).then((response) {
       if (response.statusCode == 200) {
-        this.usuarioModel =
-            UsuarioModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+        Constants.prefs.setString("usuario", this.usuarioModel.usuario);
+        Constants.prefs.setString("senha", this.usuarioModel.senha);
+        token = jsonDecode(utf8.decode(response.bodyBytes))['access_token'];
+        convertTokenToUsuario();
         Navigator.pushReplacementNamed(context, 'home');
       } else {
         showNotification(
-            scaffoldKey: scaffoldState, msg: 'Erro ao conectar no servidor!');
+            scaffoldKey: scaffoldState, msg: utf8.decode(response.bodyBytes));
       }
-    }
-    ).catchError((onError) {
+    }).catchError((onError) {
       print(onError);
       showNotification(
           scaffoldKey: scaffoldState, msg: 'Erro ao conectar no servidor!');
@@ -37,37 +45,10 @@ abstract class _UsuarioControllerBase with Store {
   }
 
   @action
-  Future<void> editar(GlobalKey<ScaffoldState> scaffoldState) async {
-    await usuarioService
-        .editar(jsonEncode(usuarioModel.toJson()))
-        .then((response) {
-      if (response.statusCode == 200) {
-        showNotification(
-            duration: Constants.duration,
-            color: Colors.teal,
-            msg: 'Usuario alterado com Sucesso!',
-            scaffoldKey: scaffoldState);
-        Future.delayed(Constants.duration).then((onValue) {
-          Navigator.of(scaffoldState.currentContext).pop();
-        });
-      } else {
-        print('StatusCode:\n${response.statusCode}');
-        showNotification(
-            msg: 'Não foi possível alterar o Usuario!',
-            scaffoldKey: scaffoldState);
-      }
-    }).catchError((erro) {
-      print('erro ao alterar a Usuario!\n$erro');
-      showNotification(
-          msg: 'Erro ao conectar com o servidor!', scaffoldKey: scaffoldState);
-    });
-  }
-
-  Future testarConexao(
-      GlobalKey<ScaffoldState> scaffoldState, String urlTeste) async {
+  void testarConexao(GlobalKey<ScaffoldState> scaffoldState, String urlTeste) {
     urlTeste = urlTeste.trim();
     urlTeste = (urlTeste.endsWith("/") ? urlTeste : '$urlTeste/');
-    await usuarioService.testarComunicacao(urlTeste).then((response) {
+    usuarioService.testarComunicacao(urlTeste).then((response) {
       if (response.statusCode == 200) {
         print('Conectei!');
         showNotification(
@@ -87,5 +68,36 @@ abstract class _UsuarioControllerBase with Store {
       showNotification(msg: msg, scaffoldKey: scaffoldState);
       return false;
     });
+  }
+
+  void convertTokenToUsuario() {
+    print('Token: $token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    Constants.requestHeaders=header;
+
+    final parts = token.split('.');
+    final payload = parts[1];
+    // print('Payload: $payload');
+    final String normalized = base64Url.normalize(payload);
+    var resp = utf8.decode(base64Url.decode(normalized));
+    // print('Payload Decoded: $resp');
+    var userJson = jsonDecode(resp)['sub'];
+    this.usuarioModel = UsuarioModel.fromJson(jsonDecode(userJson));
+  }
+
+  @action
+  String validaUsuario(String value) =>
+      value.trim().isEmpty ? 'Informe o Usuário' : null;
+
+  @action
+  String validaSenha(String value) =>
+      value.trim().isEmpty ? 'Informe a Senha' : null;
+
+  bool validaLoginSalvo() {
+    return Constants.prefs.containsKey("usuario") &&
+        Constants.prefs.containsKey("senha");
   }
 }

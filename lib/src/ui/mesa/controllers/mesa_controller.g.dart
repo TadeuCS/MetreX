@@ -64,10 +64,10 @@ mixin _$MesaController on _MesaControllerBase, Store {
       ActionController(name: '_MesaControllerBase');
 
   @override
-  void abrirMesa() {
+  void abrirMesa(String numeroMesa) {
     final _$actionInfo = _$_MesaControllerBaseActionController.startAction();
     try {
-      return super.abrirMesa();
+      return super.abrirMesa(numeroMesa);
     } finally {
       _$_MesaControllerBaseActionController.endAction(_$actionInfo);
     }
