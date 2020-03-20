@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GrupoAtendimento extends StatelessWidget {
+class GrupoAtendimentoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(

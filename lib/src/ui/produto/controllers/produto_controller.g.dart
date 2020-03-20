@@ -45,6 +45,23 @@ mixin _$ProdutoController on _ProdutoControllerBase, Store {
     }, _$produtosFiltradosAtom, name: '${_$produtosFiltradosAtom.name}_set');
   }
 
+  final _$recadosAtom = Atom(name: '_ProdutoControllerBase.recados');
+
+  @override
+  ObservableList<RecadoModel> get recados {
+    _$recadosAtom.context.enforceReadPolicy(_$recadosAtom);
+    _$recadosAtom.reportObserved();
+    return super.recados;
+  }
+
+  @override
+  set recados(ObservableList<RecadoModel> value) {
+    _$recadosAtom.context.conditionallyRunInAction(() {
+      super.recados = value;
+      _$recadosAtom.reportChanged();
+    }, _$recadosAtom, name: '${_$recadosAtom.name}_set');
+  }
+
   final _$produtoModelAtom = Atom(name: '_ProdutoControllerBase.produtoModel');
 
   @override
@@ -66,7 +83,7 @@ mixin _$ProdutoController on _ProdutoControllerBase, Store {
       ActionController(name: '_ProdutoControllerBase');
 
   @override
-  void listarProdutosByGrupoAtendimento(GrupoAtendimentoModel grupo) {
+  void listarProdutosByGrupoAtendimento(GrupoModel grupo) {
     final _$actionInfo = _$_ProdutoControllerBaseActionController.startAction();
     try {
       return super.listarProdutosByGrupoAtendimento(grupo);
@@ -80,6 +97,16 @@ mixin _$ProdutoController on _ProdutoControllerBase, Store {
     final _$actionInfo = _$_ProdutoControllerBaseActionController.startAction();
     try {
       return super.filtraProdutosListados(filtro);
+    } finally {
+      _$_ProdutoControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void carregarProduto(ProdutoModel produtoSelecionado, BuildContext context) {
+    final _$actionInfo = _$_ProdutoControllerBaseActionController.startAction();
+    try {
+      return super.carregarProduto(produtoSelecionado, context);
     } finally {
       _$_ProdutoControllerBaseActionController.endAction(_$actionInfo);
     }

@@ -1,4 +1,7 @@
+import 'package:MetreX/src/shared/util/OUtil.dart';
+import 'package:MetreX/src/shared/util/Session.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class PedidoItemPage extends StatefulWidget {
   @override
@@ -9,13 +12,15 @@ class _PedidoItemPageState extends State<PedidoItemPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Detalhes do Item'),
-          centerTitle: true,
-        ),
-        body: buildContent(),
-      ),
+      child: Observer(builder: (_) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('Detalhes do Item'),
+            centerTitle: true,
+          ),
+          body: buildContent(),
+        );
+      }),
     );
   }
 
@@ -116,29 +121,31 @@ class _PedidoItemPageState extends State<PedidoItemPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Text(
-              'Pastel de milho',
+              Session.produtoController.produtoModel.descricao,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
             ),
           ),
           Text(
-            'R\$ 5,00',
+            OUtil.formataMoeda(Session.produtoController.produtoModel.preco),
             style: TextStyle(
                 fontWeight: FontWeight.w600, fontSize: 16, color: Colors.grey),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              color: Colors.grey[300],
-              child: Text(
-                'Prato composto com arroz integral, sal, brócolis e orégano.',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ),
+          Session.produtoController.temManualProducao()
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    color: Colors.grey[300],
+                    child: Text(
+                      Session.produtoController.produtoModel.manualProducao,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

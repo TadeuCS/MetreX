@@ -1,5 +1,4 @@
 import 'package:MetreX/src/shared/util/Session.dart';
-import 'package:MetreX/src/ui/pedido/models/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -19,14 +18,11 @@ class _MesaPageState extends State<MesaPage> {
   @override
   void initState() {
     super.initState();
-    
     Session.mesaController.listarTodas();
-//    searchPressed();
   }
 
   @override
   Widget build(BuildContext context) {
-    Session.mesaController.verificandoMesas=true;
     return SafeArea(
       child: Observer(builder: (_) {
         return Scaffold(
@@ -99,17 +95,7 @@ class _MesaPageState extends State<MesaPage> {
         ),
       ),
       onTap: () {
-        if (mesaModel.idMesa != null) {
-          Session.mesaController.mesaModel = mesaModel;
-          try {
-            setDataTeste();
-            Navigator.pushNamed(context, 'detalharMesa');
-          } catch (err) {
-            print('vish\n$err');
-          }
-        }else{
-          searchPressed();
-        }
+        carregarMesa(mesaModel.numeroMesa);
       },
     );
   }
@@ -117,52 +103,51 @@ class _MesaPageState extends State<MesaPage> {
   void searchPressed() {
     setState(() {
       if (this._searchIcon.icon == Icons.search) {
-        this._searchIcon = Icon(
-          Icons.close,
-          color: Theme.of(context).indicatorColor,
-        );
-        this.appBarTitle = TextField(
-          style: TextStyle(color: Theme.of(context).indicatorColor),
-          autofocus: true,
-          controller: _filter,
-          onChanged: Session.mesaController.filtrar,
-          onEditingComplete: (){
-            Session.mesaController.abrirMesa(_filter.text.trim());
-          },
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              // prefixIcon: Icon(Icons.search),
-              hintText: 'Informe a Mesa',
-              hintStyle: TextStyle(color: Theme.of(context).indicatorColor),
-              errorText: null,
-              errorStyle: TextStyle(color: Theme.of(context).indicatorColor)),
-        );
+        openSearchBar();
       } else {
-        this._searchIcon = Icon(
-          Icons.search,
-          color: Theme.of(context).indicatorColor,
-        );
-        this.appBarTitle = Text(title);
+        closeSearchBar();
       }
     });
   }
 
-  void setDataTeste() {
-    Session.pedidoController.pedido.itens.add(ItemModel(
-        idProduto: 1, descricao: "Coca Cola 350ml", qtde: 2, preco: 5));
-    Session.pedidoController.pedido.itens.add(ItemModel(
-        idProduto: 1, descricao: "Chopp Brahma 500ml", qtde: 3, preco: 9.5));
-    Session.pedidoController.pedido.itens.add(ItemModel(
-        idProduto: 1, descricao: "Coca Cola 350ml", qtde: 2, preco: 5));
-    Session.pedidoController.pedido.itens.add(ItemModel(
-        idProduto: 1, descricao: "Chopp Brahma 500ml", qtde: 3, preco: 9.5));
-    Session.pedidoController.pedido.itens.add(ItemModel(
-        idProduto: 1, descricao: "Coca Cola 350ml", qtde: 2, preco: 5));
-    Session.pedidoController.pedido.itens.add(ItemModel(
-        idProduto: 1, descricao: "Chopp Brahma 500ml", qtde: 3, preco: 9.5));
-    Session.pedidoController.pedido.itens.add(ItemModel(
-        idProduto: 1, descricao: "Coca Cola 350ml", qtde: 2, preco: 5));
-    Session.pedidoController.pedido.itens.add(ItemModel(
-        idProduto: 1, descricao: "Chopp Brahma 500ml", qtde: 3, preco: 9.5));
+  void closeSearchBar() {
+    this._searchIcon = Icon(
+      Icons.search,
+      color: Theme.of(context).indicatorColor,
+    );
+    this.appBarTitle = Text(title);
+    _filter.clear();
+    Session.mesaController.filtrar('');
+  }
+
+  void openSearchBar() {
+    this._searchIcon = Icon(
+      Icons.close,
+      color: Theme.of(context).indicatorColor,
+    );
+    this.appBarTitle = TextField(
+      style: TextStyle(color: Theme.of(context).indicatorColor),
+      autofocus: true,
+      controller: _filter,
+      onChanged: Session.mesaController.filtrar,
+      onEditingComplete: () {
+        carregarMesa(_filter.text.trim());
+      },
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+          // prefixIcon: Icon(Icons.search),
+          hintText: 'Informe a Mesa',
+          hintStyle: TextStyle(color: Theme.of(context).indicatorColor),
+          errorText: null,
+          errorStyle: TextStyle(color: Theme.of(context).indicatorColor)),
+    );
+  }
+
+  void carregarMesa(String numeroMesa) {
+    searchPressed();
+    if (numeroMesa != null && numeroMesa.isNotEmpty) {
+      Session.mesaController.abrirMesa(numeroMesa, context);
+      closeSearchBar();
+    }
   }
 }

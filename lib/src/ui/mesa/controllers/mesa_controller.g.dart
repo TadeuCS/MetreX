@@ -26,23 +26,6 @@ mixin _$MesaController on _MesaControllerBase, Store {
     }, _$mesaModelAtom, name: '${_$mesaModelAtom.name}_set');
   }
 
-  final _$mesasAtom = Atom(name: '_MesaControllerBase.mesas');
-
-  @override
-  ObservableList<MesaModel> get mesas {
-    _$mesasAtom.context.enforceReadPolicy(_$mesasAtom);
-    _$mesasAtom.reportObserved();
-    return super.mesas;
-  }
-
-  @override
-  set mesas(ObservableList<MesaModel> value) {
-    _$mesasAtom.context.conditionallyRunInAction(() {
-      super.mesas = value;
-      _$mesasAtom.reportChanged();
-    }, _$mesasAtom, name: '${_$mesasAtom.name}_set');
-  }
-
   final _$mesasFiltradasAtom = Atom(name: '_MesaControllerBase.mesasFiltradas');
 
   @override
@@ -64,10 +47,10 @@ mixin _$MesaController on _MesaControllerBase, Store {
       ActionController(name: '_MesaControllerBase');
 
   @override
-  void abrirMesa(String numeroMesa) {
+  void abrirMesa(String numeroMesa, BuildContext context) {
     final _$actionInfo = _$_MesaControllerBaseActionController.startAction();
     try {
-      return super.abrirMesa(numeroMesa);
+      return super.abrirMesa(numeroMesa, context);
     } finally {
       _$_MesaControllerBaseActionController.endAction(_$actionInfo);
     }

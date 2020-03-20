@@ -1,13 +1,13 @@
 import 'package:MetreX/src/shared/util/Constants.dart';
 import 'package:MetreX/src/shared/util/Session.dart';
-import 'package:MetreX/src/ui/grupo/models/grupo_atendimento_model.dart';
+import 'package:MetreX/src/ui/produto/models/grupo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class PedidoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Session.grupoController.listarGrupoAtendimentos();
+    Session.produtoController.listarGrupoAtendimentos();
     return SafeArea(
       child: Scaffold(
         appBar: buildAppBar(context),
@@ -24,7 +24,7 @@ class PedidoPage extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
-            Session.grupoController.grupoModel = GrupoAtendimentoModel();
+            Session.produtoController.grupoModel = GrupoModel();
             Navigator.pushNamed(context, 'produto');
           },
         ),
@@ -40,7 +40,7 @@ class PedidoPage extends StatelessWidget {
 
   Widget _gridGrupoAtendimento() {
     return GridView.builder(
-      itemCount: Session.grupoController.gruposAtendimento.length,
+      itemCount: Session.produtoController.gruposAtendimento.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3, childAspectRatio: 1.6),
       itemBuilder: (context, index) {
@@ -49,14 +49,14 @@ class PedidoPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Session.grupoController.gruposAtendimento[index].imagem.isEmpty
+                Session.produtoController.gruposAtendimento[index].imagem.isEmpty
                     ? Icon(Icons.image)
                     : Image.network(
-                        "${Constants.servidor}/resources/64px/${Session.grupoController.gruposAtendimento[index].imagem}.png",
+                        "${Constants.servidor}/resources/64px/${Session.produtoController.gruposAtendimento[index].imagem}.png",
                         width: 30,
                       ),
                 Text(
-                  Session.grupoController.gruposAtendimento[index].descricao,
+                  Session.produtoController.gruposAtendimento[index].descricao,
                   style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
                 ),
@@ -64,8 +64,8 @@ class PedidoPage extends StatelessWidget {
             ),
           ),
           onTap: () {
-            Session.grupoController.grupoModel =
-                Session.grupoController.gruposAtendimento[index];
+            Session.produtoController.grupoModel =
+                Session.produtoController.gruposAtendimento[index];
             Navigator.pushNamed(context, 'produto');
           },
         );

@@ -1,3 +1,4 @@
+import 'package:MetreX/src/shared/util/OUtil.dart';
 import 'package:MetreX/src/shared/util/Session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -12,7 +13,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
   void initState() {
     super.initState();
     Session.produtoController
-        .listarProdutosByGrupoAtendimento(Session.grupoController.grupoModel);
+        .listarProdutosByGrupoAtendimento(Session.produtoController.grupoModel);
   }
 
   @override
@@ -56,11 +57,9 @@ class _ProdutoPageState extends State<ProdutoPage> {
                         )
                       ],
                     ),
-                    onTap: () {
-                      Session.produtoController.produtoModel = p;
-                      Navigator.pushNamed(context, "item");
-                    },
-                    subtitle: Text(p.preco.toStringAsFixed(2)),
+                    onTap: () =>
+                        Session.produtoController.carregarProduto(p, context),
+                    subtitle: Text(OUtil.formataMoeda(p.preco)),
                   ),
                 ))
             .toList(),

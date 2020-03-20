@@ -1,5 +1,4 @@
 import 'package:MetreX/src/ui/caixa/controllers/caixa_controller.dart';
-import 'package:MetreX/src/ui/grupo/controllers/grupo_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,7 +16,7 @@ import 'ui/pedido/pedido_page.dart';
 import 'ui/pedido/widgets/pedido_item_page.dart';
 import 'ui/produto/controllers/produto_controller.dart';
 import 'ui/produto/produto_page.dart';
-import 'ui/produto/widgets/grupo_page.dart';
+import 'ui/produto/widgets/grupo_atendimento_page.dart';
 import 'ui/recebimento/recebimento_page.dart';
 import 'ui/recebimento/widget/forma_recebimento_page.dart';
 
@@ -35,7 +34,6 @@ class _MainAPPState extends State<MainAPP> {
     getIt.registerSingleton<MesaController>(MesaController());
     getIt.registerSingleton<PedidoController>(PedidoController());
     getIt.registerSingleton<ProdutoController>(ProdutoController());
-    getIt.registerSingleton<GrupoController>(GrupoController());
     getIt.registerSingleton<CaixaController>(CaixaController());
   }
 
@@ -60,7 +58,7 @@ class _MainAPPState extends State<MainAPP> {
       "pedido": (context) => PedidoPage(),
       "item": (context) => PedidoItemPage(),
       "produto": (context) => ProdutoPage(),
-      "grupo": (context) => GrupoPage(),
+      "grupo": (context) => GrupoAtendimentoPage(),
       "caixa": (context) => CaixaPage(),
       "conferencia": (context) => ConferenciaCaixaPage(),
       "recebimento": (context) => RecebimentoPage(),
