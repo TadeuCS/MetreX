@@ -1,6 +1,6 @@
 import 'package:MetreX/src/shared/util/Constants.dart';
 import 'package:MetreX/src/shared/util/Session.dart';
-import 'package:MetreX/src/ui/produto/models/grupo_model.dart';
+import 'package:MetreX/src/ui/produto/models/grupo_atendimento_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -24,7 +24,7 @@ class PedidoPage extends StatelessWidget {
         IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
-            Session.produtoController.grupoModel = GrupoModel();
+            Session.produtoController.grupoModel = GrupoAtendimentoModel();
             Navigator.pushNamed(context, 'produto');
           },
         ),

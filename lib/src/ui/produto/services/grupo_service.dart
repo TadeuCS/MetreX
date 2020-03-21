@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:MetreX/src/shared/util/Constants.dart';
 import 'package:MetreX/src/shared/util/HttpUtils.dart';
-import 'package:MetreX/src/ui/produto/models/grupo_model.dart';
+import 'package:MetreX/src/ui/produto/models/grupo_atendimento_model.dart';
 import 'package:MetreX/src/ui/produto/models/produto_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +10,7 @@ class GrupoService extends HttpUtils {
   
   GrupoService(String endpoint) : super(endpoint);
 
-  Future<List<GrupoModel>> listarGrupoAtendimentos() async {
+  Future<List<GrupoAtendimentoModel>> listarGrupoAtendimentos() async {
     String url = "${Constants.apiUrl + endpoint}";
     return await http.get(url, headers: Constants.requestHeaders)
     .timeout(Constants.timeout)
@@ -18,13 +18,13 @@ class GrupoService extends HttpUtils {
       print('Status: ${response.statusCode } - ${response.reasonPhrase}');
       if(response.statusCode==200){
         List grupos = jsonDecode(utf8.decode(response.bodyBytes));
-        return grupos.map((e) => GrupoModel.fromJson(e)).toList();
+        return grupos.map((e) => GrupoAtendimentoModel.fromJson(e)).toList();
       }else{
-        return List<GrupoModel>();
+        return List<GrupoAtendimentoModel>();
       }
     }).catchError((err){
       print('erro\n$err');
-      return List<GrupoModel>();
+      return List<GrupoAtendimentoModel>();
     });
   }
 

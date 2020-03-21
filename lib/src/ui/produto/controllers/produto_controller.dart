@@ -1,4 +1,4 @@
-import 'package:MetreX/src/ui/produto/models/grupo_model.dart';
+import 'package:MetreX/src/ui/produto/models/grupo_atendimento_model.dart';
 import 'package:MetreX/src/ui/produto/models/produto_model.dart';
 import 'package:MetreX/src/ui/produto/models/recado_model.dart';
 import 'package:MetreX/src/ui/produto/services/grupo_service.dart';
@@ -26,10 +26,10 @@ abstract class _ProdutoControllerBase with Store {
   var produtoModel = ProdutoModel();
 
   @observable
-  var gruposAtendimento = ObservableList<GrupoModel>();
+  var gruposAtendimento = ObservableList<GrupoAtendimentoModel>();
 
   @observable
-  var grupoModel = GrupoModel();
+  var grupoModel = GrupoAtendimentoModel();
 
   @observable
   var recados = ObservableList<RecadoModel>();
@@ -45,7 +45,7 @@ abstract class _ProdutoControllerBase with Store {
   }
 
   @action
-  void listarProdutosByGrupoAtendimento(GrupoModel grupo) {
+  void listarProdutosByGrupoAtendimento(GrupoAtendimentoModel grupo) {
     grupoService
         .listarProdutosByGrupoAtendimento(grupo.idGrupo)
         .then((produtos) {
